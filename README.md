@@ -1,5 +1,5 @@
 # V14Leanback
-[![Wercker](https://img.shields.io/badge/Android%20Client-bilibili-brightgreen.svg)](https://github.com/HotBitmapGG/bilibili) [![Wercker](https://img.shields.io/badge/Gradle-2.1.3-brightgreen.svg)]() [![Wercker](https://img.shields.io/badge/version-V2.1.6-brightgreen.svg)](https://github.com/HotBitmapGG/bilibili) [![TeamCity CodeBetter](https://img.shields.io/teamcity/codebetter/bt428.svg?maxAge=2592000)]() [![Crates.io](https://img.shields.io/crates/l/rustc-serialize.svg?maxAge=2592000)]()
+[![Wercker](https://img.shields.io/badge/Android%20Client-bilibili-brightgreen.svg)](https://github.com/HotBitmapGG/bilibili) [![Wercker](https://img.shields.io/badge/Gradle-2.2.2-brightgreen.svg)]() [![Wercker](https://img.shields.io/badge/version-V1.0.1-brightgreen.svg)](https://github.com/HotBitmapGG/bilibili) [![TeamCity CodeBetter](https://img.shields.io/teamcity/codebetter/bt428.svg?maxAge=2592000)]() [![Crates.io](https://img.shields.io/crates/l/rustc-serialize.svg?maxAge=2592000)]()
    <p>   一个适用于Android TV端的分页加载列表库，控件继承自RecyclerView，部分源码抽取自Google Support v17 Leanback包下源码，可兼容低版本环境(api>=14)。
    
 Features
