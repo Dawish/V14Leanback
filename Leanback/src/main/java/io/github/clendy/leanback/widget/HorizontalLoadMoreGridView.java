@@ -32,8 +32,6 @@ import static io.github.clendy.leanback.widget.OnLoadMoreListener.STATE_MORE_LOA
  * A horizontally scrolling lists that supports paging loading
  *
  * @author Clendy
- * @date 2016/11/15 015 17:10
- * @e-mail yc330483161@outlook.com
  */
 public class HorizontalLoadMoreGridView extends HorizontalGridView {
 
@@ -187,6 +185,8 @@ public class HorizontalLoadMoreGridView extends HorizontalGridView {
 
     /**
      * to determine if the load is being loaded
+     *
+     * @return boolean
      */
     public boolean isMoreLoading() {
         return mLoadState == OnLoadMoreListener.STATE_MORE_LOADING;
@@ -198,6 +198,8 @@ public class HorizontalLoadMoreGridView extends HorizontalGridView {
 
     /**
      * To determine whether the data are loaded complete
+     *
+     * @return boolean
      */
     public boolean isAllLoaded() {
         return mLoadState == OnLoadMoreListener.STATE_ALL_LOADED;

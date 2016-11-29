@@ -29,8 +29,6 @@ import io.github.clendy.leanback.R;
  * A vertically scrolling lists that supports paging loading
  *
  * @author Clendy
- * @date 2016/11/15 015 17:11
- * @e-mail yc330483161@outlook.com
  */
 public class VerticalLoadMoreGridView extends VerticalGridView {
 
@@ -183,6 +181,8 @@ public class VerticalLoadMoreGridView extends VerticalGridView {
 
     /**
      * to determine if the load is being loaded
+     *
+     * @return boolean
      */
     public boolean isMoreLoading() {
         return mLoadState == OnLoadMoreListener.STATE_MORE_LOADING;
@@ -194,6 +194,8 @@ public class VerticalLoadMoreGridView extends VerticalGridView {
 
     /**
      * To determine whether the data are loaded complete
+     *
+     * @return boolean
      */
     public boolean isAllLoaded() {
         return mLoadState == OnLoadMoreListener.STATE_ALL_LOADED;

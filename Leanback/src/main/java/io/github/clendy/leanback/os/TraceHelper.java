@@ -20,7 +20,6 @@ import android.os.Build;
 
 /**
  * Helper for systrace events.
- * @hide
  */
 public final class TraceHelper {
 

@@ -29,8 +29,6 @@ import android.view.View;
  * HeaderDecoration
  *
  * @author Clendy
- * @date 2016/11/16 016 19:22
- * @e-mail yc330483161@outlook.com
  */
 public class HeaderDecoration extends RecyclerView.ItemDecoration {
 

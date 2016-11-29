@@ -33,43 +33,27 @@ public final class ItemAlignmentFacet {
         float mOffsetPercent = 50f;
         boolean mOffsetWithPadding = false;
 
-        /**
-         * Sets number of pixels to offset. Can be negative for alignment from the high edge, or
-         * positive for alignment from the low edge.
-         */
+
         public final void setItemAlignmentOffset(int offset) {
             mOffset = offset;
         }
 
-        /**
-         * Gets number of pixels to offset. Can be negative for alignment from the high edge, or
-         * positive for alignment from the low edge.
-         */
+
         public final int getItemAlignmentOffset() {
             return mOffset;
         }
 
-        /**
-         * Sets whether to include left/top padding for positive item offset, include
-         * right/bottom padding for negative item offset.
-         */
+
         public final void setItemAlignmentOffsetWithPadding(boolean withPadding) {
             mOffsetWithPadding = withPadding;
         }
 
-        /**
-         * When it is true: we include left/top padding for positive item offset, include
-         * right/bottom padding for negative item offset.
-         */
+
         public final boolean isItemAlignmentOffsetWithPadding() {
             return mOffsetWithPadding;
         }
 
-        /**
-         * Sets the offset percent for item alignment in addition to offset.  E.g., 40
-         * means 40% of the width from the low edge. Use {@link #ITEM_ALIGN_OFFSET_PERCENT_DISABLED}
-         * to disable.
-         */
+
         public final void setItemAlignmentOffsetPercent(float percent) {
             if ((percent < 0 || percent > 100) &&
                     percent != ITEM_ALIGN_OFFSET_PERCENT_DISABLED) {
@@ -78,45 +62,27 @@ public final class ItemAlignmentFacet {
             mOffsetPercent = percent;
         }
 
-        /**
-         * Gets the offset percent for item alignment in addition to offset. E.g., 40
-         * means 40% of the width from the low edge. Use {@link #ITEM_ALIGN_OFFSET_PERCENT_DISABLED}
-         * to disable.
-         */
+
         public final float getItemAlignmentOffsetPercent() {
             return mOffsetPercent;
         }
 
-        /**
-         * Sets Id of which child view to be aligned.  View.NO_ID refers to root view and should
-         * be only used in first one.  Extra ItemAlignmentDefs should provide view id to match
-         * currently focused view.
-         */
+
         public final void setItemAlignmentViewId(int viewId) {
             mViewId = viewId;
         }
 
-        /**
-         * Gets Id of which child view to be aligned.  View.NO_ID refers to root view and should
-         * be only used in first one.  Extra ItemAlignmentDefs should provide view id to match
-         * currently focused view.
-         */
+
         public final int getItemAlignmentViewId() {
             return mViewId;
         }
 
-        /**
-         * Sets Id of which child view take focus for alignment.  When not set, it will use
-         * use same id of {@link #getItemAlignmentViewId()}
-         */
+
         public final void setItemAlignmentFocusViewId(int viewId) {
             mFocusViewId = viewId;
         }
 
-        /**
-         * Returns Id of which child view take focus for alignment.  When not set, it will use
-         * use same id of {@link #getItemAlignmentViewId()}
-         */
+
         public final int getItemAlignmentFocusViewId() {
             return mFocusViewId != View.NO_ID ? mFocusViewId : mViewId;
         }
@@ -128,9 +94,6 @@ public final class ItemAlignmentFacet {
         return mAlignmentDefs.length > 1;
     }
 
-    /**
-     * Sets definitions of alignment positions.
-     */
     public void setAlignmentDefs(ItemAlignmentDef[] defs) {
         if (defs == null || defs.length < 1) {
             throw new IllegalArgumentException();
@@ -138,9 +101,6 @@ public final class ItemAlignmentFacet {
         mAlignmentDefs = defs;
     }
 
-    /**
-     * Returns read only definitions of alignment positions.
-     */
     public ItemAlignmentDef[] getAlignmentDefs() {
         return mAlignmentDefs;
     }

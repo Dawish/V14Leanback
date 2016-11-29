@@ -20,8 +20,6 @@ package io.github.clendy.leanback.widget;
  * A RecyclerView load more listener
  *
  * @author Clendy
- * @date 2016/11/15 015 20:29
- * @e-mail yc330483161@outlook.com
  */
 public interface OnLoadMoreListener {
 
@@ -30,6 +28,8 @@ public interface OnLoadMoreListener {
     int STATE_ALL_LOADED = 3;
 
     void loadMore();
+
     void showMsgLoading();
+
     void showMsgAllLoaded();
 }

@@ -21,20 +21,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A Presenter is used to generate {@link View}s and bind Objects to them on
- * demand. It is closely related to the concept of an {@link
+ * A Presenter is used to generate {  View}s and bind Objects to them on
+ * demand. It is closely related to the concept of an { 
  * android.support.v7.widget.RecyclerView.Adapter RecyclerView.Adapter}, but is
  * not position-based.  The leanback framework implements the adapter concept using
- * {@link ObjectAdapter} which refers to a Presenter (or {@link PresenterSelector}) instance.
+ * {  ObjectAdapter} which refers to a Presenter (or {  PresenterSelector}) instance.
  *
  * <p>
- * Presenters should be stateless.  Presenters typically extend {@link ViewHolder} to store all
+ * Presenters should be stateless.  Presenters typically extend {  ViewHolder} to store all
  * necessary view state information, such as references to child views to be used when
- * binding to avoid expensive calls to {@link View#findViewById(int)}.
+ * binding to avoid expensive calls to {  View#findViewById(int)}.
  * </p>
  *
  * <p>
- * A trivial Presenter that takes a string and renders it into a {@link
+ * A trivial Presenter that takes a string and renders it into a { 
  * android.widget.TextView TextView}:
  *
  * <pre class="prettyprint">
@@ -63,9 +63,9 @@ import java.util.Map;
  * }
  * </pre>
  * In addition to view creation and binding, Presenter allows dynamic interface (facet) to
- * be added: {@link #setFacet(Class, Object)}.  Supported facets:
- * <li> {@link ItemAlignmentFacet} is used by {@link HorizontalGridView} and
- * {@link VerticalGridView} to customize child alignment.
+ * be added: {  #setFacet(Class, Object)}.  Supported facets:
+ * {  ItemAlignmentFacet} is used by {  HorizontalGridView} and
+ * {  VerticalGridView} to customize child alignment.
  */
 public abstract class Presenter implements FacetProvider {
     /**
@@ -91,7 +91,7 @@ public abstract class Presenter implements FacetProvider {
 
         /**
          * Sets dynamic implemented facet in addition to basic ViewHolder functions.
-         * @param facetClass   Facet classes to query,  can be class of {@link ItemAlignmentFacet}.
+         * @param facetClass   Facet classes to query,  can be class of {ItemAlignmentFacet}.
          * @param facetImpl  Facet implementation.
          */
         public final void setFacet(Class<?> facetClass, Object facetImpl) {
@@ -117,17 +117,17 @@ public abstract class Presenter implements FacetProvider {
     private Map<Class, Object> mFacets;
 
     /**
-     * Creates a new {@link View}.
+     * Creates a new {View}.
      */
     public abstract ViewHolder onCreateViewHolder(ViewGroup parent);
 
     /**
-     * Binds a {@link View} to an item.
+     * Binds a {  View} to an item.
      */
     public abstract void onBindViewHolder(ViewHolder viewHolder, Object item);
 
     /**
-     * Unbinds a {@link View} from an item. Any expensive references may be
+     * Unbinds a {  View} from an item. Any expensive references may be
      * released here, and any fields that are not bound for every item should be
      * cleared here.
      */
@@ -138,7 +138,7 @@ public abstract class Presenter implements FacetProvider {
      *
      * <p>This can be used as a reasonable signal that the view is about to be seen
      * by the user. If the adapter previously freed any resources in
-     * {@link #onViewDetachedFromWindow(ViewHolder)}
+     * {  #onViewDetachedFromWindow(ViewHolder)}
      * those resources should be restored here.</p>
      *
      * @param holder Holder of the view being attached
@@ -205,7 +205,7 @@ public abstract class Presenter implements FacetProvider {
 
     /**
      * Sets dynamic implemented facet in addition to basic Presenter functions.
-     * @param facetClass   Facet classes to query,  can be class of {@link ItemAlignmentFacet}.
+     * @param facetClass   Facet classes to query,  can be class of {  ItemAlignmentFacet}.
      * @param facetImpl  Facet implementation.
      */
     public final void setFacet(Class<?> facetClass, Object facetImpl) {

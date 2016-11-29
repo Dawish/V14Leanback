@@ -31,7 +31,6 @@ import io.github.clendy.leanback.R;
  * An abstract base class for vertically and horizontally scrolling lists. The items come
  * from the {@link RecyclerView.Adapter} associated with this view.
  * Do not directly use this class, use {@link VerticalGridView} and {@link HorizontalGridView}.
- * @hide
  */
 public abstract class BaseGridView extends RecyclerView {
 
@@ -205,7 +204,7 @@ public abstract class BaseGridView extends RecyclerView {
         // Change animation will create a new view and cause undesired
         // focus animation between the old view and new view.
 //        ((SimpleItemAnimator)getItemAnimator()).setSupportsChangeAnimations(false);
-        ((SimpleItemAnimator)getItemAnimator()).setSupportsChangeAnimations(false);
+        ((SimpleItemAnimator) getItemAnimator()).setSupportsChangeAnimations(false);
         super.setRecyclerListener(new RecyclerView.RecyclerListener() {
             @Override
             public void onViewRecycled(RecyclerView.ViewHolder holder) {
@@ -268,8 +267,8 @@ public abstract class BaseGridView extends RecyclerView {
      * Sets the method for focused item alignment in the view.
      *
      * @param windowAlignment {@link #WINDOW_ALIGN_BOTH_EDGE},
-     *        {@link #WINDOW_ALIGN_LOW_EDGE}, {@link #WINDOW_ALIGN_HIGH_EDGE} or
-     *        {@link #WINDOW_ALIGN_NO_EDGE}.
+     *                        {@link #WINDOW_ALIGN_LOW_EDGE}, {@link #WINDOW_ALIGN_HIGH_EDGE} or
+     *                        {@link #WINDOW_ALIGN_NO_EDGE}.
      */
     public void setWindowAlignment(int windowAlignment) {
         mLayoutManager.setWindowAlignment(windowAlignment);
@@ -280,7 +279,7 @@ public abstract class BaseGridView extends RecyclerView {
      * Returns the method for focused item alignment in the view.
      *
      * @return {@link #WINDOW_ALIGN_BOTH_EDGE}, {@link #WINDOW_ALIGN_LOW_EDGE},
-     *         {@link #WINDOW_ALIGN_HIGH_EDGE} or {@link #WINDOW_ALIGN_NO_EDGE}.
+     * {@link #WINDOW_ALIGN_HIGH_EDGE} or {@link #WINDOW_ALIGN_NO_EDGE}.
      */
     public int getWindowAlignment() {
         return mLayoutManager.getWindowAlignment();
@@ -290,10 +289,10 @@ public abstract class BaseGridView extends RecyclerView {
      * Sets the offset in pixels for window alignment.
      *
      * @param offset The number of pixels to offset.  If the offset is positive,
-     *        it is distance from low edge (see {@link #WINDOW_ALIGN_LOW_EDGE});
-     *        if the offset is negative, the absolute value is distance from high
-     *        edge (see {@link #WINDOW_ALIGN_HIGH_EDGE}).
-     *        Default value is 0.
+     *               it is distance from low edge (see {@link #WINDOW_ALIGN_LOW_EDGE});
+     *               if the offset is negative, the absolute value is distance from high
+     *               edge (see {@link #WINDOW_ALIGN_HIGH_EDGE}).
+     *               Default value is 0.
      */
     public void setWindowAlignmentOffset(int offset) {
         mLayoutManager.setWindowAlignmentOffset(offset);
@@ -304,10 +303,10 @@ public abstract class BaseGridView extends RecyclerView {
      * Returns the offset in pixels for window alignment.
      *
      * @return The number of pixels to offset.  If the offset is positive,
-     *        it is distance from low edge (see {@link #WINDOW_ALIGN_LOW_EDGE});
-     *        if the offset is negative, the absolute value is distance from high
-     *        edge (see {@link #WINDOW_ALIGN_HIGH_EDGE}).
-     *        Default value is 0.
+     * it is distance from low edge (see {@link #WINDOW_ALIGN_LOW_EDGE});
+     * if the offset is negative, the absolute value is distance from high
+     * edge (see {@link #WINDOW_ALIGN_HIGH_EDGE}).
+     * Default value is 0.
      */
     public int getWindowAlignmentOffset() {
         return mLayoutManager.getWindowAlignmentOffset();
@@ -318,9 +317,9 @@ public abstract class BaseGridView extends RecyclerView {
      * #getWindowAlignmentOffset()}.
      *
      * @param offsetPercent Percentage to offset. E.g., 40 means 40% of the
-     *        width from low edge. Use
-     *        {@link #WINDOW_ALIGN_OFFSET_PERCENT_DISABLED} to disable.
-     *         Default value is 50.
+     *                      width from low edge. Use
+     *                      {@link #WINDOW_ALIGN_OFFSET_PERCENT_DISABLED} to disable.
+     *                      Default value is 50.
      */
     public void setWindowAlignmentOffsetPercent(float offsetPercent) {
         mLayoutManager.setWindowAlignmentOffsetPercent(offsetPercent);
@@ -332,8 +331,8 @@ public abstract class BaseGridView extends RecyclerView {
      * {@link #getWindowAlignmentOffset()}.
      *
      * @return Percentage to offset. E.g., 40 means 40% of the width from the
-     *         low edge, or {@link #WINDOW_ALIGN_OFFSET_PERCENT_DISABLED} if
-     *         disabled. Default value is 50.
+     * low edge, or {@link #WINDOW_ALIGN_OFFSET_PERCENT_DISABLED} if
+     * disabled. Default value is 50.
      */
     public float getWindowAlignmentOffsetPercent() {
         return mLayoutManager.getWindowAlignmentOffsetPercent();
@@ -345,8 +344,8 @@ public abstract class BaseGridView extends RecyclerView {
      * is provided by {@link RecyclerView.ViewHolder} or {@link FacetProviderAdapter}.
      *
      * @param offset The number of pixels to offset. Can be negative for
-     *        alignment from the high edge, or positive for alignment from the
-     *        low edge.
+     *               alignment from the high edge, or positive for alignment from the
+     *               low edge.
      */
     public void setItemAlignmentOffset(int offset) {
         mLayoutManager.setItemAlignmentOffset(offset);
@@ -357,8 +356,8 @@ public abstract class BaseGridView extends RecyclerView {
      * Returns the absolute offset in pixels for item alignment.
      *
      * @return The number of pixels to offset. Will be negative for alignment
-     *         from the high edge, or positive for alignment from the low edge.
-     *         Default value is 0.
+     * from the high edge, or positive for alignment from the low edge.
+     * Default value is 0.
      */
     public int getItemAlignmentOffset() {
         return mLayoutManager.getItemAlignmentOffset();
@@ -370,7 +369,7 @@ public abstract class BaseGridView extends RecyclerView {
      * is provided by {@link RecyclerView.ViewHolder} or {@link FacetProviderAdapter}.
      *
      * @param withPadding When it is true: we include left/top padding for positive
-     *          item offset, include right/bottom padding for negative item offset.
+     *                    item offset, include right/bottom padding for negative item offset.
      */
     public void setItemAlignmentOffsetWithPadding(boolean withPadding) {
         mLayoutManager.setItemAlignmentOffsetWithPadding(withPadding);
@@ -391,8 +390,8 @@ public abstract class BaseGridView extends RecyclerView {
      * is provided by {@link RecyclerView.ViewHolder} or {@link FacetProviderAdapter}.
      *
      * @param offsetPercent Percentage to offset. E.g., 40 means 40% of the
-     *        width from the low edge. Use
-     *        {@link #ITEM_ALIGN_OFFSET_PERCENT_DISABLED} to disable.
+     *                      width from the low edge. Use
+     *                      {@link #ITEM_ALIGN_OFFSET_PERCENT_DISABLED} to disable.
      */
     public void setItemAlignmentOffsetPercent(float offsetPercent) {
         mLayoutManager.setItemAlignmentOffsetPercent(offsetPercent);
@@ -404,8 +403,8 @@ public abstract class BaseGridView extends RecyclerView {
      * #getItemAlignmentOffset()}.
      *
      * @return Percentage to offset. E.g., 40 means 40% of the width from the
-     *         low edge, or {@link #ITEM_ALIGN_OFFSET_PERCENT_DISABLED} if
-     *         disabled. Default value is 50.
+     * low edge, or {@link #ITEM_ALIGN_OFFSET_PERCENT_DISABLED} if
+     * disabled. Default value is 50.
      */
     public float getItemAlignmentOffsetPercent() {
         return mLayoutManager.getItemAlignmentOffsetPercent();
@@ -519,8 +518,7 @@ public abstract class BaseGridView extends RecyclerView {
      *
      * @param listener The listener to be removed.
      */
-    public void removeOnChildViewHolderSelectedListener(OnChildViewHolderSelectedListener listener)
-    {
+    public void removeOnChildViewHolderSelectedListener(OnChildViewHolderSelectedListener listener) {
         mLayoutManager.removeOnChildViewHolderSelectedListener(listener);
     }
 
@@ -574,8 +572,9 @@ public abstract class BaseGridView extends RecyclerView {
 
     /**
      * Perform a task on ViewHolder at given position after smooth scrolling to it.
+     *
      * @param position Position of item in adapter.
-     * @param task Task to executed on the ViewHolder at a given position.
+     * @param task     Task to executed on the ViewHolder at a given position.
      */
     public void setSelectedPositionSmooth(final int position, final ViewHolderTask task) {
         if (task != null) {
@@ -599,8 +598,9 @@ public abstract class BaseGridView extends RecyclerView {
 
     /**
      * Perform a task on ViewHolder at given position after scroll to it.
+     *
      * @param position Position of item in adapter.
-     * @param task Task to executed on the ViewHolder at a given position.
+     * @param task     Task to executed on the ViewHolder at a given position.
      */
     public void setSelectedPosition(final int position, final ViewHolderTask task) {
         if (task != null) {
@@ -686,7 +686,7 @@ public abstract class BaseGridView extends RecyclerView {
      * Returns the x/y offsets to final position from current position if the view
      * is selected.
      *
-     * @param view The view to get offsets.
+     * @param view    The view to get offsets.
      * @param offsets offsets[0] holds offset of X, offsets[1] holds offset of Y.
      */
     public void getViewSelectedOffsets(View view, int[] offsets) {
@@ -728,7 +728,7 @@ public abstract class BaseGridView extends RecyclerView {
     public final void setFocusSearchDisabled(boolean disabled) {
         // LayoutManager may detachView and attachView in fastRelayout, it causes RowsFragment
         // re-gain focus after a BACK key pressed, so block children focus during transition.
-        setDescendantFocusability(disabled ? FOCUS_BLOCK_DESCENDANTS: FOCUS_AFTER_DESCENDANTS);
+        setDescendantFocusability(disabled ? FOCUS_BLOCK_DESCENDANTS : FOCUS_AFTER_DESCENDANTS);
         mLayoutManager.setFocusSearchDisabled(disabled);
     }
 
@@ -882,7 +882,7 @@ public abstract class BaseGridView extends RecyclerView {
 
     /**
      * Returns the limit used when when {@link #getSaveChildrenPolicy()} is
-     *         {@link #SAVE_LIMITED_CHILD}
+     * {@link #SAVE_LIMITED_CHILD}
      */
     public final int getSaveChildrenLimitNumber() {
         return mLayoutManager.mChildrenStates.getLimitNumber();
@@ -890,8 +890,9 @@ public abstract class BaseGridView extends RecyclerView {
 
     /**
      * Sets the policy for saving children.
+     *
      * @param savePolicy One of {@link #SAVE_NO_CHILD} {@link #SAVE_ON_SCREEN_CHILD}
-     * {@link #SAVE_LIMITED_CHILD} {@link #SAVE_ALL_CHILD}.
+     *                   {@link #SAVE_LIMITED_CHILD} {@link #SAVE_ALL_CHILD}.
      */
     public final void setSaveChildrenPolicy(int savePolicy) {
         mLayoutManager.mChildrenStates.setSavePolicy(savePolicy);
@@ -929,9 +930,8 @@ public abstract class BaseGridView extends RecyclerView {
     /**
      * Sets pixels of extra space for layout child in invisible area.
      *
-     * @param extraLayoutSpace  Pixels of extra space for layout invisible child.
-     *                          Must be bigger or equals to 0.
-     * @hide
+     * @param extraLayoutSpace Pixels of extra space for layout invisible child.
+     *                         Must be bigger or equals to 0.
      */
     public void setExtraLayoutSpace(int extraLayoutSpace) {
         mLayoutManager.setExtraLayoutSpace(extraLayoutSpace);
@@ -939,8 +939,6 @@ public abstract class BaseGridView extends RecyclerView {
 
     /**
      * Returns pixels of extra space for layout child in invisible area.
-     *
-     * @hide
      */
     public int getExtraLayoutSpace() {
         return mLayoutManager.getExtraLayoutSpace();

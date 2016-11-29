@@ -19,21 +19,21 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * An {@link ObjectAdapter} implemented with an {@link ArrayList}.
+ * An {  ObjectAdapter} implemented with an {  ArrayList}.
  */
 public class ArrayObjectAdapter extends ObjectAdapter {
 
     private ArrayList<Object> mItems = new ArrayList<Object>();
 
     /**
-     * Constructs an adapter with the given {@link PresenterSelector}.
+     * Constructs an adapter with the given {  PresenterSelector}.
      */
     public ArrayObjectAdapter(PresenterSelector presenterSelector) {
         super(presenterSelector);
     }
 
     /**
-     * Constructs an adapter that uses the given {@link Presenter} for all items.
+     * Constructs an adapter that uses the given {  Presenter} for all items.
      */
     public ArrayObjectAdapter(Presenter presenter) {
         super(presenter);
@@ -90,7 +90,6 @@ public class ArrayObjectAdapter extends ObjectAdapter {
 
     /**
      * Inserts an item into this adapter at the specified index.
-     * If the index is >= {@link #size} an exception will be thrown.
      *
      * @param index The index at which the item should be inserted.
      * @param item The item to insert into the adapter.
@@ -101,11 +100,10 @@ public class ArrayObjectAdapter extends ObjectAdapter {
     }
 
     /**
-     * Adds the objects in the given collection to the adapter, starting at the
-     * given index.  If the index is >= {@link #size} an exception will be thrown.
+     * Adds the objects in the given collection to the adapter, starting at the given index.
      *
      * @param index The index at which the items should be inserted.
-     * @param items A {@link Collection} of items to insert.
+     * @param items A {  Collection} of items to insert.
      */
     public void addAll(int index, Collection items) {
         int itemsCount = items.size();

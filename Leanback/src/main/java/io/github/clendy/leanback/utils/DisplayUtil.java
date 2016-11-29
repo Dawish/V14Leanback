@@ -23,9 +23,6 @@ import android.view.WindowManager;
 /**
  * DisplayUtil
  *
- * @author Clendy
- * @date 2016/11/16 016 19:24
- * @e-mail yc330483161@outlook.com
  */
 public class DisplayUtil {
 

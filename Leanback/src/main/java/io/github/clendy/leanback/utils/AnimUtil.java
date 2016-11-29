@@ -29,9 +29,6 @@ import android.view.animation.ScaleAnimation;
 /**
  * AnimUtil
  *
- * @author Clendy
- * @date 2016/11/16 016 17:09
- * @e-mail yc330483161@outlook.com
  */
 public class AnimUtil {
 

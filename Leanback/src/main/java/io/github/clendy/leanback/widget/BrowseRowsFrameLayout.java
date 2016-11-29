@@ -22,7 +22,6 @@ import android.widget.FrameLayout;
  * Customized FrameLayout excludes margin of child from calculating the child size.
  * So we can change left margin of rows while keep the width of rows unchanged without
  * using hardcoded DIPS.
- * @hide
  */
 public class BrowseRowsFrameLayout extends FrameLayout {
 
