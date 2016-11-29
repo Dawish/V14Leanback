@@ -1,5 +1,8 @@
 # V14Leanback
-   <p>   一个适用于Android TV端的分页加载列表库，控件继承自RecyclerView，部分源码抽取自Google Support v17 Leanback包下源码，可兼容低版本环境。相比原始的RecyclerView，拥有以下特点：
+   <p>   一个适用于Android TV端的分页加载列表库，控件继承自RecyclerView，部分源码抽取自Google Support v17 Leanback包下源码，可兼容低版本环境(api>=14)。
+   
+Features
+========   
   * 自动回焦至被选中的item
   * item滚动居中
   * 焦点移动至边界位置时不会出现越界丢失焦点
@@ -16,6 +19,11 @@ Download
 ========
 You can use Gradle:
 ```groovy
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
 compile 'io.github.clendy.leanback:v14leanback:1.0.1'
 ```
 
