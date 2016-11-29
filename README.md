@@ -4,7 +4,7 @@
   * item滚动居中
   * 焦点移动至边界位置时不会出现越界丢失焦点
   * 快速滑动和慢速滑动都不会出现丢焦现象
-  * 支持分页加载
+  * 支持分页加载  
   
   ##HorizontalLoadMoreGridView
   ![image](https://github.com/Clendy/V14Leanback/blob/master/screenshots/Horizontal.gif)
