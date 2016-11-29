@@ -1,7 +1,7 @@
 # V14Leanback
 [![Wercker](https://img.shields.io/badge/Gradle-2.2.2-brightgreen.svg)]()
 [![Wercker](https://img.shields.io/badge/version-V1.0.1-brightgreen.svg)]()
-[![API](https://img.shields.io/badge/API-14%2B-green.svg?style=flat)](https://android-arsenal.com/api?level=14)]()
+[![API](https://img.shields.io/badge/API-14%2B-green.svg?style=flat)](https://android-arsenal.com/api?level=14)
 [![TeamCity CodeBetter](https://img.shields.io/teamcity/codebetter/bt428.svg?maxAge=2592000)]()
 [![Crates.io](https://img.shields.io/crates/l/rustc-serialize.svg?maxAge=2592000)]((http://www.apache.org/licenses/LICENSE-2.0)
    <p>   一个适用于Android TV端的分页加载列表库，控件继承自RecyclerView，部分源码抽取自Google Support v17 Leanback包下源码，可兼容低版本环境(api>=14)。
