@@ -28,7 +28,7 @@ allprojects {
         jcenter()
     }
 }
-compile 'io.github.clendy.leanback:v14leanback:1.0.1'
+compile 'io.github.clendy.leanback:v14leanback:1.0.2'
 ```
 
 Or Maven:
@@ -36,14 +36,14 @@ Or Maven:
 <dependency>
   <groupId>io.github.clendy.leanback</groupId>
   <artifactId>v14leanback</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <type>pom</type>
 </dependency>
 ```
 
 Or Ivy:
 ```groovy
-<dependency org='io.github.clendy.leanback' name='v14leanback' rev='1.0.1'>
+<dependency org='io.github.clendy.leanback' name='v14leanback' rev='1.0.2'>
   <artifact name='v14leanback' ext='pom' ></artifact>
 </dependency>
 ```
