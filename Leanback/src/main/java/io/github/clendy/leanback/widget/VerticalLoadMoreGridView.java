@@ -247,8 +247,7 @@ public class VerticalLoadMoreGridView extends VerticalGridView {
                 focused.post(new Runnable() {
                     @Override
                     public void run() {
-                        GridLayoutManager layoutManager = (GridLayoutManager) getLayoutManager();
-                        layoutManager.setSelectionSmooth(position + layoutManager.getNumRows());
+                        requestLayout();
                     }
                 });
             }

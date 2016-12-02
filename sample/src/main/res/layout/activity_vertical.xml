@@ -130,10 +130,11 @@
             android:paddingTop="30dp"
             app:addLoadingView="true"
             app:canLoadMore="true"
-            app:columnWidth="180dp"
+            app:columnWidth="wrap_content"
             app:horizontalMargin="10dp"
             app:numberOfColumns="4"
             app:verticalMargin="30dp"/>
+            <!--app:columnWidth="180dp"-->
 
 
         <com.gc.materialdesign.views.ProgressBarCircularIndeterminate

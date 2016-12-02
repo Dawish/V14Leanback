@@ -19,6 +19,7 @@ package io.github.clendy.leanback.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.FocusFinder;
 import android.view.KeyEvent;
 import android.view.View;
@@ -259,8 +260,7 @@ public class HorizontalLoadMoreGridView extends HorizontalGridView {
                 focused.post(new Runnable() {
                     @Override
                     public void run() {
-                        GridLayoutManager layoutManager = (GridLayoutManager) getLayoutManager();
-                        layoutManager.setSelectionSmooth(position + layoutManager.getNumRows());
+                        requestLayout();
                     }
                 });
             }

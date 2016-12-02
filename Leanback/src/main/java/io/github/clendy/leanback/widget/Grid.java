@@ -18,9 +18,11 @@ import android.support.v4.util.CircularIntArray;
 import java.io.PrintWriter;
 
 /**
- * A grid is representation of single or multiple rows layout data structure and algorithm.
- * Grid is the base class for single row, non-staggered grid and staggered grid.
+ * A grid is representation of multiple row layout data structure and algorithm.
+ * Grid is the base class for both staggered case or simple non-staggered case.
  * <p>
+ * User calls Grid.createStaggeredMutipleRows() to create an staggered instance.
+ * TODO add createNonStaggeredRows().
  * To use the Grid, user must implement a Provider to create or remove visible item.
  * Grid maintains a list of visible items.  Visible items are created when
  * user calls appendVisibleItems() or prependVisibleItems() with certain limitation
@@ -118,17 +120,11 @@ abstract class Grid {
     protected int mStartIndex = START_DEFAULT;
 
     /**
-     * Creates a single or multiple rows (can be staggered or not staggered) grid
+     * Creates a multiple rows staggered grid.
      */
-    public static Grid createGrid(int rows) {
-        Grid grid;
-        if (rows == 1) {
-            grid = new SingleRow();
-        } else {
-            // TODO support non staggered multiple rows grid
-            grid = new StaggeredGridDefault();
-            grid.setNumRows(rows);
-        }
+    public static Grid createStaggeredMultipleRows(int rows) {
+        StaggeredGridDefault grid = new StaggeredGridDefault();
+        grid.setNumRows(rows);
         return grid;
     }
 
@@ -293,7 +289,7 @@ abstract class Grid {
             return false;
         }
         return mReversedFlow ? findRowMin(true, null) <= toLimit + mMargin :
-                findRowMax(false, null) >= toLimit - mMargin;
+                    findRowMax(false, null) >= toLimit - mMargin;
     }
 
     /**
@@ -304,7 +300,7 @@ abstract class Grid {
             return false;
         }
         return mReversedFlow ? findRowMax(false, null) >= toLimit + mMargin :
-                findRowMin(true, null) <= toLimit - mMargin;
+                    findRowMin(true, null) <= toLimit - mMargin;
     }
 
     /**
@@ -405,7 +401,7 @@ abstract class Grid {
             boolean offFront = !mReversedFlow ? mProvider.getEdge(mFirstVisibleIndex)
                     + mProvider.getSize(mFirstVisibleIndex) <= toLimit
                     : mProvider.getEdge(mFirstVisibleIndex)
-                    - mProvider.getSize(mFirstVisibleIndex) >= toLimit;
+                            - mProvider.getSize(mFirstVisibleIndex) >= toLimit;
             if (offFront) {
                 mProvider.removeItem(mFirstVisibleIndex);
                 mFirstVisibleIndex++;
