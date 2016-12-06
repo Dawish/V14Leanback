@@ -38,7 +38,6 @@ public class HorizontalLoadMoreGridView extends HorizontalGridView {
 
     private static final String TAG = HorizontalLoadMoreGridView.class.getSimpleName();
 
-    private Context mContext;
     private boolean canLoadMore = false;
     private boolean addLoadingView = false;
     private int allLoadedToastCount = 0;
@@ -57,7 +56,7 @@ public class HorizontalLoadMoreGridView extends HorizontalGridView {
 
     public HorizontalLoadMoreGridView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        mContext = context;
+
         init(context, attrs);
     }
 
@@ -69,6 +68,26 @@ public class HorizontalLoadMoreGridView extends HorizontalGridView {
         } finally {
             a.recycle();
         }
+    }
+
+    public int getLoadState() {
+        return mLoadState;
+    }
+
+    public boolean isCanLoadMore() {
+        return canLoadMore;
+    }
+
+    public void setCanLoadMore(boolean canLoadMore) {
+        this.canLoadMore = canLoadMore;
+    }
+
+    public boolean isAddLoadingView() {
+        return addLoadingView;
+    }
+
+    public void setAddLoadingView(boolean addLoadingView) {
+        this.addLoadingView = addLoadingView;
     }
 
     /**
