@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Clendy
+ * Copyright (C) 2016 Clendy <yc330483161@163.com | yc330483161@outlook.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,15 +19,11 @@ package io.github.clendy.leanback.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.FocusFinder;
 import android.view.KeyEvent;
 import android.view.View;
 
 import io.github.clendy.leanback.R;
-
-import static io.github.clendy.leanback.widget.OnLoadMoreListener.STATE_MORE_LOADED;
-
 
 /**
  * A horizontally scrolling lists that supports paging loading
@@ -41,7 +37,7 @@ public class HorizontalLoadMoreGridView extends HorizontalGridView {
     private boolean canLoadMore = false;
     private boolean addLoadingView = false;
     private int allLoadedToastCount = 0;
-    private int mLoadState = STATE_MORE_LOADED;
+    private int mLoadState = OnLoadMoreListener.STATE_MORE_LOADED;
 
     private OnLoadMoreListener mLoadMoreListener;
 

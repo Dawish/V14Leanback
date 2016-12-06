@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Clendy
+ * Copyright (C) 2016 Clendy <yc330483161@163.com | yc330483161@outlook.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import android.view.WindowManager;
 
 /**
  * DisplayUtil
- *
  */
 public class DisplayUtil {
 
