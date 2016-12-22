@@ -124,7 +124,19 @@ public class VerticalLoadMoreGridView extends VerticalGridView {
             int position = mLayoutManager.getPosition(getFocusedChild());
             return position % mLayoutManager.getNumRows() == 0;
         }
-        hasFocus();
+        return false;
+    }
+
+    /**
+     * determine whether the focus is located on the topmost row
+     *
+     * @return true if the focus on the topmost row
+     */
+    public boolean isFocusOnTopmostRow() {
+        if (mLayoutManager != null && getFocusedChild() != null) {
+            int position = mLayoutManager.getPosition(getFocusedChild());
+            return position < mLayoutManager.getNumRows();
+        }
         return false;
     }
 

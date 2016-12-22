@@ -115,6 +115,19 @@ public class HorizontalLoadMoreGridView extends HorizontalGridView {
     }
 
     /**
+     * determine whether the focus is located on the leftmost column
+     *
+     * @return true if the focus on the leftmost column
+     */
+    public boolean isFocusOnLeftmostColumn() {
+        if (mLayoutManager != null && getFocusedChild() != null) {
+            int position = mLayoutManager.getPosition(getFocusedChild());
+            return position < mLayoutManager.getNumRows();
+        }
+        return false;
+    }
+
+    /**
      * determine whether the focus is located on the top row
      *
      * @return true if the focus on the top row
@@ -124,7 +137,6 @@ public class HorizontalLoadMoreGridView extends HorizontalGridView {
             int position = mLayoutManager.getPosition(getFocusedChild());
             return position % mLayoutManager.getNumRows() == 0;
         }
-        hasFocus();
         return false;
     }
 
@@ -148,7 +160,7 @@ public class HorizontalLoadMoreGridView extends HorizontalGridView {
     /**
      * determine whether the focus is located on the rightmost column
      *
-     * @return true if the focus on the bottom row
+     * @return true if the focus on the bottom column
      */
     public boolean isFocusOnRightmostColumn() {
         if (mLayoutManager != null && getFocusedChild() != null) {

@@ -17,6 +17,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 
+def versionVer = 104
+def version = "1.0.4"
 
 android {
     compileSdkVersion 22
@@ -25,8 +27,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 102
-        versionName "1.0.2"
+        versionCode  versionVer
+        versionName version
 
     }
     buildTypes {
@@ -53,7 +55,7 @@ publish {
     userOrg = 'clendy2016'
     groupId = 'io.github.clendy.leanback'
     artifactId = 'v14leanback'
-    publishVersion = '1.0.2'
+    publishVersion = version
     desc = 'V14Leanback is a Android TV widget library.'
     website = 'https://github.com/Clendy/V14Leanback'
 }
