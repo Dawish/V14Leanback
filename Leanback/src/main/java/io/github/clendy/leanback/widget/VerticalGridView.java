@@ -16,7 +16,9 @@ package io.github.clendy.leanback.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 
 import io.github.clendy.leanback.R;
 
@@ -40,6 +42,14 @@ import io.github.clendy.leanback.R;
  */
 public class VerticalGridView extends BaseGridView {
 
+    private static final String TAG = VerticalGridView.class.getSimpleName();
+
+    protected boolean focusOutLeft;
+    protected boolean focusOutTop;
+    protected boolean focusOutRight;
+    protected boolean focusOutBottom;
+
+
     public VerticalGridView(Context context) {
         this(context, null);
     }
@@ -57,8 +67,15 @@ public class VerticalGridView extends BaseGridView {
     protected void initAttributes(Context context, AttributeSet attrs) {
         initBaseGridViewAttributes(context, attrs);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.lbVerticalGridView);
+
+        focusOutLeft = a.getBoolean(R.styleable.lbVerticalGridView_lbv_focusOutLeft, true);
+        focusOutTop = a.getBoolean(R.styleable.lbVerticalGridView_lbv_focusOutTop, true);
+        focusOutRight = a.getBoolean(R.styleable.lbVerticalGridView_lbv_focusOutRight, true);
+        focusOutBottom = a.getBoolean(R.styleable.lbVerticalGridView_lbv_focusOutBottom, true);
+
         setColumnWidth(a);
         setNumColumns(a.getInt(R.styleable.lbVerticalGridView_numberOfColumns, 1));
+
         a.recycle();
     }
 
@@ -88,5 +105,127 @@ public class VerticalGridView extends BaseGridView {
     public void setColumnWidth(int width) {
         mLayoutManager.setRowHeight(width);
         requestLayout();
+    }
+
+
+    /**
+     * determine whether the focus is located on the leftmost column
+     *
+     * @return true if the focus on the leftmost column
+     */
+    public boolean isFocusOnLeftmostColumn() {
+        if (mLayoutManager != null && getFocusedChild() != null) {
+            int position = mLayoutManager.getPosition(getFocusedChild());
+            Log.i(TAG, "isFocusOnLeftmostColumn, position:" + position);
+            Log.i(TAG, "isFocusOnLeftmostColumn, getNumRows():" + mLayoutManager.getNumRows());
+            return position % mLayoutManager.getNumRows() == 0;
+        }
+        return false;
+    }
+
+    /**
+     * determine whether the focus is located on the topmost row
+     *
+     * @return true if the focus on the topmost row
+     */
+    public boolean isFocusOnTopmostRow() {
+        if (mLayoutManager != null && getFocusedChild() != null) {
+            int position = mLayoutManager.getPosition(getFocusedChild());
+            Log.i(TAG, "isFocusOnTopmostRow, position:" + position);
+            Log.i(TAG, "isFocusOnTopmostRow, getNumRows():" + mLayoutManager.getNumRows());
+            return position < mLayoutManager.getNumRows();
+        }
+        return false;
+    }
+
+    /**
+     * determine whether the focus is located on the rightmost column
+     *
+     * @return true if the focus on the rightmost column
+     */
+    public boolean isFocusOnRightmostColumn() {
+        if (mLayoutManager != null && getFocusedChild() != null) {
+            int position = mLayoutManager.getPosition(getFocusedChild());
+            Log.i(TAG, "isFocusOnRightmostColumn, position:" + position);
+            Log.i(TAG, "isFocusOnRightmostColumn, getNumRows():" + mLayoutManager.getNumRows());
+            if (position % mLayoutManager.getNumRows() == mLayoutManager.getNumRows() - 1) {
+                return true;
+            } else if (position == mLayoutManager.getItemCount() - 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * determine whether the focus is located on the bottom row
+     *
+     * @return true if the focus on the bottom row
+     */
+    public boolean isFocusOnBottomRow() {
+        if (mLayoutManager != null && getFocusedChild() != null) {
+            int position = mLayoutManager.getPosition(getFocusedChild());
+            int rowCount = mLayoutManager.getItemCount() / mLayoutManager.getNumRows();
+            int rowNum = position / mLayoutManager.getNumRows();
+            Log.i(TAG, "isFocusOnBottomRow, position:" + position);
+            Log.i(TAG, "isFocusOnBottomRow, getNumRows():" + mLayoutManager.getNumRows());
+            Log.i(TAG, "isFocusOnBottomRow, rowCount:" + rowCount);
+            Log.i(TAG, "isFocusOnBottomRow, rowNum:" + rowNum);
+            return rowNum == rowCount - 1;
+        }
+
+        return false;
+    }
+
+    /**
+     * determine whether the focus is located on the bottom row
+     *
+     * @param focus    the current focus view
+     * @param position The adapter position of the item which is rendered by this View.
+     * @return true if the focus on the bottom row
+     */
+    public boolean isFocusOnBottomRow(View focus, int position) {
+        if (mLayoutManager != null && focus != null) {
+            int rowCount = mLayoutManager.getItemCount() / mLayoutManager.getNumRows();
+            int rowNum = position / mLayoutManager.getNumRows();
+            Log.i(TAG, "isFocusOnBottomRow, position:" + position);
+            Log.i(TAG, "isFocusOnBottomRow, getNumRows():" + mLayoutManager.getNumRows());
+            Log.i(TAG, "isFocusOnBottomRow, rowCount:" + rowCount);
+            Log.i(TAG, "isFocusOnBottomRow, rowNum:" + rowNum);
+            return rowNum == rowCount - 1;
+        }
+        return false;
+    }
+
+    public boolean isFocusOutLeft() {
+        return focusOutLeft;
+    }
+
+    public void setFocusOutLeft(boolean focusOutLeft) {
+        this.focusOutLeft = focusOutLeft;
+    }
+
+    public boolean isFocusOutTop() {
+        return focusOutTop;
+    }
+
+    public void setFocusOutTop(boolean focusOutTop) {
+        this.focusOutTop = focusOutTop;
+    }
+
+    public boolean isFocusOutRight() {
+        return focusOutRight;
+    }
+
+    public void setFocusOutRight(boolean focusOutRight) {
+        this.focusOutRight = focusOutRight;
+    }
+
+    public boolean isFocusOutBottom() {
+        return focusOutBottom;
+    }
+
+    public void setFocusOutBottom(boolean focusOutBottom) {
+        this.focusOutBottom = focusOutBottom;
     }
 }

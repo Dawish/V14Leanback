@@ -12,6 +12,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     Button mVerticalBtn;
     Button mHorizontalBtn;
+    Button mSpanBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +20,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         mVerticalBtn = ((Button) findViewById(R.id.vertical));
         mHorizontalBtn = ((Button) findViewById(R.id.horizontal));
+        mSpanBtn = ((Button) findViewById(R.id.span));
         mVerticalBtn.setOnClickListener(this);
         mHorizontalBtn.setOnClickListener(this);
+        mSpanBtn.setOnClickListener(this);
     }
 
     public void onClick(View view) {
@@ -30,6 +33,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.horizontal:
                 startActivity(new Intent(MainActivity.this, HorizontalActivity.class));
+                break;
+            case R.id.span:
+                startActivity(new Intent(MainActivity.this, SpanActivity.class));
                 break;
         }
     }

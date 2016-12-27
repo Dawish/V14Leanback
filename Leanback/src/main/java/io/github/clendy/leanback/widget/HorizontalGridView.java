@@ -26,7 +26,9 @@ import android.graphics.Rect;
 import android.graphics.Shader;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.View;
 
 import io.github.clendy.leanback.R;
@@ -51,6 +53,8 @@ import io.github.clendy.leanback.R;
  */
 public class HorizontalGridView extends BaseGridView {
 
+    private static final String TAG = HorizontalGridView.class.getSimpleName();
+
     private boolean mFadingLowEdge;
     private boolean mFadingHighEdge;
 
@@ -64,6 +68,12 @@ public class HorizontalGridView extends BaseGridView {
     private int mHighFadeShaderLength;
     private int mHighFadeShaderOffset;
     private Rect mTempRect = new Rect();
+
+    protected boolean focusOutLeft;
+    protected boolean focusOutTop;
+    protected boolean focusOutRight;
+    protected boolean focusOutBottom;
+
 
     public HorizontalGridView(Context context) {
         this(context, null);
@@ -82,6 +92,12 @@ public class HorizontalGridView extends BaseGridView {
     protected void initAttributes(Context context, AttributeSet attrs) {
         initBaseGridViewAttributes(context, attrs);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.lbHorizontalGridView);
+
+        focusOutLeft = a.getBoolean(R.styleable.lbHorizontalGridView_lbh_focusOutLeft, true);
+        focusOutTop = a.getBoolean(R.styleable.lbHorizontalGridView_lbh_focusOutTop, true);
+        focusOutRight = a.getBoolean(R.styleable.lbHorizontalGridView_lbh_focusOutRight, true);
+        focusOutBottom = a.getBoolean(R.styleable.lbHorizontalGridView_lbh_focusOutBottom, true);
+
         setRowHeight(a);
         setNumRows(a.getInt(R.styleable.lbHorizontalGridView_numberOfRows, 1));
         a.recycle();
@@ -323,7 +339,7 @@ public class HorizontalGridView extends BaseGridView {
             return;
         }
 
-        int lowEdge = mFadingLowEdge? getPaddingLeft() - mLowFadeShaderOffset - mLowFadeShaderLength : 0;
+        int lowEdge = mFadingLowEdge ? getPaddingLeft() - mLowFadeShaderOffset - mLowFadeShaderLength : 0;
         int highEdge = mFadingHighEdge ? getWidth() - getPaddingRight()
                 + mHighFadeShaderOffset + mHighFadeShaderLength : getWidth();
 
@@ -394,5 +410,126 @@ public class HorizontalGridView extends BaseGridView {
             setLayerType(LAYER_TYPE_NONE, null);
             setWillNotDraw(true);
         }
+    }
+
+    /**
+     * determine whether the focus is located on the leftmost column
+     *
+     * @return true if the focus on the leftmost column
+     */
+    public boolean isFocusOnLeftmostColumn() {
+        if (mLayoutManager != null && getFocusedChild() != null) {
+            int position = mLayoutManager.getPosition(getFocusedChild());
+            Log.i(TAG, "isFocusOnLeftmostColumn, position:" + position);
+            Log.i(TAG, "isFocusOnLeftmostColumn, getNumRows():" + mLayoutManager.getNumRows());
+            return position < mLayoutManager.getNumRows();
+        }
+        return false;
+    }
+
+    /**
+     * determine whether the focus is located on the topmost row
+     *
+     * @return true if the focus on the topmost row
+     */
+    public boolean isFocusOnTopmostRow() {
+        if (mLayoutManager != null && getFocusedChild() != null) {
+            int position = mLayoutManager.getPosition(getFocusedChild());
+            Log.i(TAG, "isFocusOnTopmostRow, position:" + position);
+            Log.i(TAG, "isFocusOnTopmostRow, getNumRows():" + mLayoutManager.getNumRows());
+            return position % mLayoutManager.getNumRows() == 0;
+        }
+        return false;
+    }
+
+    /**
+     * determine whether the focus is located on the rightmost column
+     *
+     * @return true if the focus on the bottom column
+     */
+    public boolean isFocusOnRightmostColumn() {
+        if (mLayoutManager != null && getFocusedChild() != null) {
+            int position = mLayoutManager.getPosition(getFocusedChild());
+            int rowCount = mLayoutManager.getItemCount() / mLayoutManager.getNumRows();
+            int rowNum = position / mLayoutManager.getNumRows();
+            Log.i(TAG, "isFocusOnRightmostColumn, position:" + position);
+            Log.i(TAG, "isFocusOnRightmostColumn, getNumRows():" + mLayoutManager.getNumRows());
+            Log.i(TAG, "isFocusOnRightmostColumn, rowCount:" + rowCount);
+            Log.i(TAG, "isFocusOnRightmostColumn, rowNum:" + rowNum);
+            return rowNum == rowCount - 1;
+        }
+
+        return false;
+    }
+
+    /**
+     * determine whether the focus is located on the rightmost column
+     *
+     * @param focus    the current focus view
+     * @param position The adapter position of the item which is rendered by this View.
+     * @return true if the focus on the rightmost column
+     */
+    public boolean isFocusOnRightmostColumn(View focus, int position) {
+        if (mLayoutManager != null && focus != null) {
+            int rowCount = mLayoutManager.getItemCount() / mLayoutManager.getNumRows();
+            int rowNum = position / mLayoutManager.getNumRows();
+            Log.i(TAG, "isFocusOnRightmostColumn, position:" + position);
+            Log.i(TAG, "isFocusOnRightmostColumn, getNumRows():" + mLayoutManager.getNumRows());
+            Log.i(TAG, "isFocusOnRightmostColumn, rowCount:" + rowCount);
+            Log.i(TAG, "isFocusOnRightmostColumn, rowNum:" + rowNum);
+            return rowNum == rowCount - 1;
+        }
+        return false;
+    }
+
+    /**
+     * determine whether the focus is located on the bottommost row
+     *
+     * @return true if the focus on the bottommost row
+     */
+    public boolean isFocusOnBottommostRow() {
+        if (mLayoutManager != null && getFocusedChild() != null) {
+            int position = mLayoutManager.getPosition(getFocusedChild());
+            Log.i(TAG, "isFocusOnBottommostRow, position:" + position);
+            Log.i(TAG, "isFocusOnBottommostRow, getNumRows():" + mLayoutManager.getNumRows());
+            if (position % mLayoutManager.getNumRows() == mLayoutManager.getNumRows() - 1) {
+                return true;
+            } else if (position == mLayoutManager.getItemCount() - 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isFocusOutLeft() {
+        return focusOutLeft;
+    }
+
+    public void setFocusOutLeft(boolean focusOutLeft) {
+        this.focusOutLeft = focusOutLeft;
+    }
+
+    public boolean isFocusOutTop() {
+        return focusOutTop;
+    }
+
+    public void setFocusOutTop(boolean focusOutTop) {
+        this.focusOutTop = focusOutTop;
+    }
+
+    public boolean isFocusOutRight() {
+        return focusOutRight;
+    }
+
+    public void setFocusOutRight(boolean focusOutRight) {
+        this.focusOutRight = focusOutRight;
+    }
+
+    public boolean isFocusOutBottom() {
+        return focusOutBottom;
+    }
+
+    public void setFocusOutBottom(boolean focusOutBottom) {
+        this.focusOutBottom = focusOutBottom;
     }
 }

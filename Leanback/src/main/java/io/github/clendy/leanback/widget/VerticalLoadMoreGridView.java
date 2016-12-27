@@ -114,80 +114,6 @@ public class VerticalLoadMoreGridView extends VerticalGridView {
         mLoadMoreListener = loadMoreListener;
     }
 
-    /**
-     * determine whether the focus is located on the leftmost column
-     *
-     * @return true if the focus on the leftmost column
-     */
-    public boolean isFocusOnLeftmostColumn() {
-        if (mLayoutManager != null && getFocusedChild() != null) {
-            int position = mLayoutManager.getPosition(getFocusedChild());
-            return position % mLayoutManager.getNumRows() == 0;
-        }
-        return false;
-    }
-
-    /**
-     * determine whether the focus is located on the topmost row
-     *
-     * @return true if the focus on the topmost row
-     */
-    public boolean isFocusOnTopmostRow() {
-        if (mLayoutManager != null && getFocusedChild() != null) {
-            int position = mLayoutManager.getPosition(getFocusedChild());
-            return position < mLayoutManager.getNumRows();
-        }
-        return false;
-    }
-
-    /**
-     * determine whether the focus is located on the rightmost column
-     *
-     * @return true if the focus on the rightmost column
-     */
-    public boolean isFocusOnRightmostColumn() {
-        if (mLayoutManager != null && getFocusedChild() != null) {
-            int position = mLayoutManager.getPosition(getFocusedChild());
-            if (position % mLayoutManager.getNumRows() == mLayoutManager.getNumRows() - 1) {
-                return true;
-            } else if (position == mLayoutManager.getItemCount() - 1) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * determine whether the focus is located on the bottom row
-     *
-     * @return true if the focus on the bottom row
-     */
-    public boolean isFocusOnBottomRow() {
-        if (mLayoutManager != null && getFocusedChild() != null) {
-            int position = mLayoutManager.getPosition(getFocusedChild());
-            int rowCount = mLayoutManager.getItemCount() / mLayoutManager.getNumRows();
-            int rowNum = position / mLayoutManager.getNumRows();
-            return rowNum == rowCount - 1;
-        }
-
-        return false;
-    }
-
-    /**
-     * determine whether the focus is located on the bottom row
-     *
-     * @param focus    the current focus view
-     * @param position The adapter position of the item which is rendered by this View.
-     * @return true if the focus on the bottom row
-     */
-    public boolean isFocusOnBottomRow(View focus, int position) {
-        if (mLayoutManager != null && focus != null) {
-            int rowCount = mLayoutManager.getItemCount() / mLayoutManager.getNumRows();
-            int rowNum = position / mLayoutManager.getNumRows();
-            return rowNum == rowCount - 1;
-        }
-        return false;
-    }
 
     /**
      * notify more data is loading
@@ -230,20 +156,6 @@ public class VerticalLoadMoreGridView extends VerticalGridView {
      */
     public boolean isAllLoaded() {
         return mLoadState == OnLoadMoreListener.STATE_ALL_LOADED;
-    }
-
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        if (mOnKeyInterceptListener != null && mOnKeyInterceptListener.onInterceptKeyEvent(event)) {
-            return true;
-        }
-        if (super.dispatchKeyEvent(event)) {
-            return true;
-        }
-        if (mOnUnhandledKeyListener != null && mOnUnhandledKeyListener.onUnhandledKey(event)) {
-            return true;
-        }
-        return false;
     }
 
 

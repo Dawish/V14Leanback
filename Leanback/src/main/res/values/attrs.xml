@@ -16,6 +16,10 @@
             <enum name="wrap_content" value="-2"/>
         </attr>
         <attr name="numberOfColumns" format="integer"/>
+        <attr name="lbv_focusOutLeft" format="boolean"/>
+        <attr name="lbv_focusOutTop" format="boolean"/>
+        <attr name="lbv_focusOutRight" format="boolean"/>
+        <attr name="lbv_focusOutBottom" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="lbHorizontalGridView">
@@ -23,11 +27,21 @@
             <enum name="wrap_content" value="-2"/>
         </attr>
         <attr name="numberOfRows" format="integer"/>
+        <attr name="lbh_focusOutLeft" format="boolean"/>
+        <attr name="lbh_focusOutTop" format="boolean"/>
+        <attr name="lbh_focusOutRight" format="boolean"/>
+        <attr name="lbh_focusOutBottom" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="lbLoadMoreGridView">
         <attr name="canLoadMore" format="boolean"/>
         <attr name="addLoadingView" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="SpanGridView">
+        <attr name="hMargin" format="dimension"/>
+        <attr name="vMargin" format="dimension"/>
+        <attr name="hasHeader" format="boolean"/>
     </declare-styleable>
 
 </resources>

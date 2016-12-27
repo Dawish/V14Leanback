@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".ui.HorizontalActivity">
         </activity>
+        <activity android:name=".ui.SpanActivity">
+        </activity>
     </application>
 
 </manifest>

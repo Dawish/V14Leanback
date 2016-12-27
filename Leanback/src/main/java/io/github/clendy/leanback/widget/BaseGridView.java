@@ -183,11 +183,11 @@ public abstract class BaseGridView extends RecyclerView {
 
     private RecyclerView.ItemAnimator mSavedItemAnimator;
 
-    public OnTouchInterceptListener mOnTouchInterceptListener;
-    public OnMotionInterceptListener mOnMotionInterceptListener;
-    public OnKeyInterceptListener mOnKeyInterceptListener;
-    public RecyclerView.RecyclerListener mChainedRecyclerListener;
-    public OnUnhandledKeyListener mOnUnhandledKeyListener;
+    private OnTouchInterceptListener mOnTouchInterceptListener;
+    private OnMotionInterceptListener mOnMotionInterceptListener;
+    private OnKeyInterceptListener mOnKeyInterceptListener;
+    private RecyclerView.RecyclerListener mChainedRecyclerListener;
+    private OnUnhandledKeyListener mOnUnhandledKeyListener;
 
     public BaseGridView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
