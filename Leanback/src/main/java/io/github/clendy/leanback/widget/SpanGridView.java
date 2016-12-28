@@ -83,8 +83,6 @@ public class SpanGridView extends RecyclerView implements View.OnClickListener,
 
     private void initAttributes(Context context, AttributeSet attrs, int defStyle) {
 
-        setClipChildren(false);
-        setClipToPadding(false);
         setDescendantFocusability(FOCUS_BEFORE_DESCENDANTS);
         setHasFixedSize(true);
         setChildrenDrawingOrderEnabled(true);
