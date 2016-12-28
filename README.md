@@ -1,8 +1,9 @@
 # V14Leanback
 [![Wercker](https://img.shields.io/badge/Gradle-2.2.2-brightgreen.svg)]()
-[![Wercker](https://img.shields.io/badge/version-V1.0.4-brightgreen.svg)]()
+[![Wercker](https://img.shields.io/badge/version-V1.0.9-brightgreen.svg)]()
 [![API](https://img.shields.io/badge/API-14%2B-green.svg?style=flat)](https://android-arsenal.com/api?level=14)
-[![Crates.io](https://img.shields.io/crates/l/rustc-serialize.svg?maxAge=2592000)](http://www.apache.org/licenses/LICENSE-2.0)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+
    <p>   一个适用于Android TV端的分页加载列表库，控件继承自RecyclerView，部分源码抽取自Google Support v17 Leanback包下源码，可兼容低版本环境(API>=14)。
    
 Features
@@ -28,7 +29,7 @@ allprojects {
         jcenter()
     }
 }
-compile 'io.github.clendy.leanback:v14leanback:1.0.4'
+compile 'io.github.clendy.leanback:v14leanback:1.0.9'
 ```
 
 Or Maven:
@@ -36,14 +37,14 @@ Or Maven:
 <dependency>
   <groupId>io.github.clendy.leanback</groupId>
   <artifactId>v14leanback</artifactId>
-  <version>1.0.4</version>
+  <version>1.0.9</version>
   <type>pom</type>
 </dependency>
 ```
 
 Or Ivy:
 ```groovy
-<dependency org='io.github.clendy.leanback' name='v14leanback' rev='1.0.4'>
+<dependency org='io.github.clendy.leanback' name='v14leanback' rev='1.0.9'>
   <artifact name='v14leanback' ext='pom' ></artifact>
 </dependency>
 ```
