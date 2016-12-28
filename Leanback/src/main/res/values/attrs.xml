@@ -39,9 +39,11 @@
     </declare-styleable>
 
     <declare-styleable name="SpanGridView">
+        <attr name="useXmlDeco" format="boolean"/>
+        <attr name="hasHeader" format="boolean"/>
+        <attr name="includeEdge" format="boolean"/>
         <attr name="hMargin" format="dimension"/>
         <attr name="vMargin" format="dimension"/>
-        <attr name="hasHeader" format="boolean"/>
     </declare-styleable>
 
 </resources>

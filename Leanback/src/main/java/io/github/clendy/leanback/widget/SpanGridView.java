@@ -1,7 +1,22 @@
+/*
+ * Copyright (C) 2016 Clendy <yc330483161@163.com | yc330483161@outlook.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.clendy.leanback.widget;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
@@ -18,31 +33,26 @@ import android.view.ViewTreeObserver;
 
 import java.util.ArrayList;
 
-import io.github.clendy.leanback.R;
-import io.github.clendy.leanback.decoration.HeaderDecoration;
 import io.github.clendy.leanback.utils.LayoutManagerHelper;
 
 
 /**
  * @author Clendy 2016/12/23 023 13:24
  */
-public class SpanGridView extends RecyclerView implements ViewTreeObserver.OnGlobalFocusChangeListener,
-        View.OnClickListener, View.OnFocusChangeListener {
+public class SpanGridView extends RecyclerView implements View.OnClickListener,
+        View.OnFocusChangeListener, ViewTreeObserver.OnGlobalFocusChangeListener {
 
     private static final String TAG = SpanGridView.class.getSimpleName();
 
     private int mPendingSelectionInt = NO_POSITION;
 
-    private final FocusArchivist mFocusArchivist = new FocusArchivist();
+    private FocusArchivist mFocusArchivist = new FocusArchivist();
 
     private OnKeyInterceptListener mOnKeyInterceptListener;
     private OnItemFocusChangeListener mOnItemFocusChangeListener;
     private OnItemClickListener mOnItemClickListener;
+    private RecyclerViewBring mRecyclerViewBring;
     private LayoutManagerHelper mManagerHelper;
-    private boolean hasHeader;
-    private int mHorizontalMargin;
-    private int mVerticalMargin;
-    private HeaderDecoration mDecoration;
 
     public interface OnKeyInterceptListener {
         boolean onInterceptKeyEvent(KeyEvent event);
@@ -73,37 +83,17 @@ public class SpanGridView extends RecyclerView implements ViewTreeObserver.OnGlo
 
     private void initAttributes(Context context, AttributeSet attrs, int defStyle) {
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SpanGridView);
-        try {
-            hasHeader = a.getBoolean(R.styleable.SpanGridView_hasHeader, false);
-            mHorizontalMargin = a.getDimensionPixelSize(R.styleable.SpanGridView_hMargin, 0);
-            mVerticalMargin = a.getDimensionPixelSize(R.styleable.SpanGridView_vMargin, 0);
-        } finally {
-            a.recycle();
-        }
-
-        Log.d(TAG, "mHorizontalMargin:" + mHorizontalMargin);
-        Log.d(TAG, "mVerticalMargin:" + mVerticalMargin);
-
-        mDecoration = new HeaderDecoration(mHorizontalMargin, mVerticalMargin
-                , false, hasHeader);
-        addItemDecoration(mDecoration);
-
-        setDescendantFocusability(FOCUS_AFTER_DESCENDANTS);
+        setClipChildren(false);
+        setClipToPadding(false);
+        setDescendantFocusability(FOCUS_BEFORE_DESCENDANTS);
         setHasFixedSize(true);
         setChildrenDrawingOrderEnabled(true);
         setWillNotDraw(true);
         setOverScrollMode(View.OVER_SCROLL_NEVER);
+        setFocusable(true);
         setItemAnimator(new DefaultItemAnimator());
+        mRecyclerViewBring = new RecyclerViewBring(this);
         mManagerHelper = LayoutManagerHelper.newInstance(this);
-    }
-
-    public void setHasHeader(boolean hasHeader) {
-        this.hasHeader = hasHeader;
-        mDecoration = new HeaderDecoration(mHorizontalMargin, mVerticalMargin
-                , false, this.hasHeader);
-        addItemDecoration(mDecoration);
-        postInvalidate();
     }
 
     public OnKeyInterceptListener getOnKeyInterceptListener() {
@@ -130,12 +120,32 @@ public class SpanGridView extends RecyclerView implements ViewTreeObserver.OnGlo
         mOnItemClickListener = onItemClickListener;
     }
 
+    public void setSelection(int adapterPosition) {
+        mPendingSelectionInt = adapterPosition;
+    }
+
+    public int getSelectedItemPosition() {
+        View focusedChild = getFocusedChild();
+        return getChildAdapterPosition(focusedChild);
+    }
+
+    @Override
+    public void setAdapter(Adapter adapter) {
+        mPendingSelectionInt = NO_POSITION;
+        mFocusArchivist = new FocusArchivist();
+        super.setAdapter(adapter);
+    }
+
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
 
+        Log.i(TAG, "mPendingSelectionInt:" + mPendingSelectionInt);
+
         if (mPendingSelectionInt != NO_POSITION) {
             setSelectionOnLayout(mPendingSelectionInt);
+        } else {
+            setSelectionOnFirstLayout();
         }
     }
 
@@ -144,7 +154,20 @@ public class SpanGridView extends RecyclerView implements ViewTreeObserver.OnGlo
         super.onDraw(c);
     }
 
+    private void setSelectionOnFirstLayout() {
+        Log.d(TAG, "setSelectionOnFirstLayout");
+        if (getChildCount() > 0) {
+            RecyclerView.ViewHolder holder = findViewHolderForAdapterPosition(0);
+            if (holder != null) {
+                if (hasFocus() && holder.itemView != null) {
+                    holder.itemView.requestFocus();
+                }
+            }
+        }
+    }
+
     private void setSelectionOnLayout(int position) {
+        Log.d(TAG, "setSelectionOnLayout position : " + position);
         RecyclerView.ViewHolder holder = findViewHolderForAdapterPosition(position);
         if (holder != null) {
             if (hasFocus()) {
@@ -265,28 +288,22 @@ public class SpanGridView extends RecyclerView implements ViewTreeObserver.OnGlo
         }
     }
 
-    int position = 0;
+    @Override
+    public void bringChildToFront(View child) {
+        if (mRecyclerViewBring != null) {
+            mRecyclerViewBring.bringChildToFront(this, child);
+        } else {
+            super.bringChildToFront(child);
+        }
+    }
 
     @Override
     protected int getChildDrawingOrder(int childCount, int i) {
-        View view = getFocusedChild();
-        if (null != view) {
-            position = getChildAdapterPosition(view) - getFirstVisiblePosition();
-            if (position < 0) {
-                return i;
-            } else {
-                if (i == childCount - 1) {
-                    if (position > i) {
-                        position = i;
-                    }
-                    return position;
-                }
-                if (i == position) {
-                    return childCount - 1;
-                }
-            }
+        if (mRecyclerViewBring != null) {
+            return mRecyclerViewBring.getChildDrawingOrder(this, childCount, i);
+        } else {
+            return super.getChildDrawingOrder(childCount, i);
         }
-        return i;
     }
 
     public int getFirstVisiblePosition() {
@@ -318,6 +335,7 @@ public class SpanGridView extends RecyclerView implements ViewTreeObserver.OnGlo
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
+        setSelection(getChildAdapterPosition(v));
         fireOnItemSelectedEvent(v, hasFocus);
     }
 
@@ -330,12 +348,15 @@ public class SpanGridView extends RecyclerView implements ViewTreeObserver.OnGlo
     }
 
     private void fireOnItemSelectedEvent(View v, boolean hasFocus) {
-        if (mOnItemFocusChangeListener != null) {
-            if (hasFocus) {
-                setSelectionOnLayout(getChildLayoutPosition(v));
-                smoothScrollToCenter(this, v);
+        if (hasFocus) {
+            setSelectionOnLayout(getChildLayoutPosition(v));
+            smoothScrollToCenter(this, v);
+            bringChildToFront(v);
+            if (mOnItemFocusChangeListener != null) {
                 mOnItemFocusChangeListener.onItemSelected(this, v, getChildLayoutPosition(v));
-            } else {
+            }
+        } else {
+            if (mOnItemFocusChangeListener != null) {
                 mOnItemFocusChangeListener.onItemPreSelected(this, v, getChildLayoutPosition(v));
             }
         }
@@ -370,7 +391,6 @@ public class SpanGridView extends RecyclerView implements ViewTreeObserver.OnGlo
     }
 
     private void smoothScrollToCenter(RecyclerView parent, View focusChild) {
-        Log.w(TAG, "********************smoothScrollToCenter*******************");
         if (parent == null || focusChild == null) {
             return;
         }
@@ -380,26 +400,22 @@ public class SpanGridView extends RecyclerView implements ViewTreeObserver.OnGlo
         LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
         int orientation = layoutManager.getOrientation();
 
-        int left = layoutManager.getDecoratedLeft(focusChild);
-        int right = layoutManager.getDecoratedRight(focusChild);
-        int top = layoutManager.getDecoratedTop(focusChild);
-        int bottom = layoutManager.getDecoratedBottom(focusChild);
-        int currentX = (right - left) / 2;
-        int currentY = (bottom - top) / 2;
-
-        int parentWidth = getWidth();
-        int parentHeight = getHeight();
+        int currentX = (layoutManager.getDecoratedLeft(focusChild) -
+                layoutManager.getDecoratedLeft(focusChild)) / 2 +
+                layoutManager.getDecoratedLeft(focusChild);
+        int currentY = (layoutManager.getDecoratedBottom(focusChild) -
+                layoutManager.getDecoratedTop(focusChild)) / 2 +
+                layoutManager.getDecoratedTop(focusChild);
 
         if (orientation == HORIZONTAL) {
-            int offset = parentWidth / 2 - currentX;
+            int offset = getWidth() / 2 - currentX;
             if (offset < 0) {
                 parent.smoothScrollBy(Math.abs(offset), 0);
             } else {
                 parent.smoothScrollBy(-Math.abs(offset), 0);
             }
         } else if (orientation == VERTICAL) {
-            int offset = parentHeight / 2 - currentY;
-
+            int offset = getHeight() / 2 - currentY;
             if (offset < 0) {
                 parent.smoothScrollBy(0, Math.abs(offset));
             } else {

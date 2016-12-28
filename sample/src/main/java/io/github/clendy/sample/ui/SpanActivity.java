@@ -3,12 +3,9 @@ package io.github.clendy.sample.ui;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -18,14 +15,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import io.github.clendy.leanback.decoration.HeaderDecoration;
-import io.github.clendy.leanback.widget.BaseGridView;
-import io.github.clendy.leanback.widget.OnChildLaidOutListener;
-import io.github.clendy.leanback.widget.OnChildSelectedListener;
-import io.github.clendy.leanback.widget.OnLoadMoreListener;
+import io.github.clendy.leanback.utils.AnimUtil;
+import io.github.clendy.leanback.utils.DisplayUtil;
 import io.github.clendy.leanback.widget.SpanGridView;
 import io.github.clendy.sample.R;
-import io.github.clendy.sample.adapter.LoadMoreAdapter;
 import io.github.clendy.sample.adapter.OnItemClickListener;
+import io.github.clendy.sample.adapter.SpanAdapter;
 import io.github.clendy.sample.model.Entity;
 import io.github.clendy.sample.presenter.VerticalPresenter;
 import io.github.clendy.sample.presenter.VerticalPresenterImpl;
@@ -63,7 +58,7 @@ public class SpanActivity extends BaseFragmentActivity<VerticalPresenter> implem
 
     private View mOldFocusView;
     private SparseArray<Button> mBtnArray;
-    private LoadMoreAdapter mAdapter;
+    private SpanAdapter mAdapter;
     private VerticalPresenter mPresenter;
 
     @Override
@@ -140,19 +135,15 @@ public class SpanActivity extends BaseFragmentActivity<VerticalPresenter> implem
 
     private void initRecyclerView() {
 
-        mAdapter = new LoadMoreAdapter(this);
-        mAdapter.setClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position, Object entity) {
-
-            }
-        });
+        mAdapter = new SpanAdapter(this);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 4,
                 GridLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
+        HeaderDecoration decoration = new HeaderDecoration(DisplayUtil.dip2px(this, 10),
+                DisplayUtil.dip2px(this, 30), false, false);
+        mRecyclerView.addItemDecoration(decoration);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
 
         mRecyclerView.setOnKeyInterceptListener(new SpanGridView.OnKeyInterceptListener() {
             @Override
@@ -183,11 +174,30 @@ public class SpanActivity extends BaseFragmentActivity<VerticalPresenter> implem
                 return false;
             }
         });
+
+        mRecyclerView.setOnItemFocusChangeListener(new SpanGridView.OnItemFocusChangeListener() {
+            @Override
+            public void onItemPreSelected(SpanGridView parent, View view, int position) {
+                AnimUtil.scaleAnim(view, 1.0f, 1.0f, 300);
+            }
+
+            @Override
+            public void onItemSelected(SpanGridView parent, final View view, int position) {
+                AnimUtil.scaleAnim(view, 1.2f, 1.2f, 300);
+            }
+        });
+
+        mRecyclerView.setOnItemClickListener(new SpanGridView.OnItemClickListener() {
+            @Override
+            public void onItemClick(SpanGridView parent, View view, int position, long id) {
+                Toast.makeText(SpanActivity.this, "position:" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initRequest() {
         mAdapter.getItems().clear();
-        mAdapter.notifyDataSetChanged();
+        mRecyclerView.setAdapter(mAdapter);
         mPresenter = new VerticalPresenterImpl(this);
         mPresenters.add(mPresenter);
     }

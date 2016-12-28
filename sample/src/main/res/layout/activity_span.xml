@@ -121,16 +121,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:clipChildren="false"
-            android:clipToPadding="false"
             android:focusable="true"
             android:paddingBottom="30dp"
             android:paddingEnd="30dp"
             android:paddingStart="30dp"
-            android:paddingTop="30dp"
-            app:hasHeader="false"
-            app:hMargin="10dp"
-            app:vMargin="30dp"/>
+            android:paddingTop="30dp"/>
 
         <!--<io.github.clendy.leanback.widget.VerticalLoadMoreGridView-->
         <!--android:id="@+id/recyclerView"-->

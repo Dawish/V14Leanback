@@ -201,7 +201,7 @@ public abstract class BaseGridView extends RecyclerView {
         // Disable change animation by default on leanback.
         // Change animation will create a new view and cause undesired
         // focus animation between the old view and new view.
-        getItemAnimator().setSupportsChangeAnimations(false);
+//        getItemAnimator().setSupportsChangeAnimations(false);
         super.setRecyclerListener(new RecyclerView.RecyclerListener() {
             @Override
             public void onViewRecycled(RecyclerView.ViewHolder holder) {
