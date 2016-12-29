@@ -17,8 +17,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 
-def versionVer = 110
-def version = "1.1.0"
+def versionVer = 111
+def version = "1.1.1"
 
 android {
     compileSdkVersion 24
