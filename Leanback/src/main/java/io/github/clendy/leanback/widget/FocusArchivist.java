@@ -71,7 +71,7 @@ class FocusArchivist {
         if (adapter != null && adapter.hasStableIds() && mLastSelectedId != NO_ID) {
             RecyclerView.ViewHolder viewHolder = rv.findViewHolderForItemId(id);
             if (viewHolder != null) {
-                viewHolder.itemView.requestFocus();
+//                viewHolder.itemView.requestFocus();
                 return viewHolder.itemView;
             }
         }

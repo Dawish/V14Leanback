@@ -19,6 +19,7 @@ package io.github.clendy.leanback.utils;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -26,23 +27,32 @@ import android.view.View;
  */
 public final class LayoutManagerHelper {
 
+    private static final String TAG = "LayoutManagerHelper";
+
     private RecyclerView mRecyclerView;
 
     private RecyclerView.LayoutManager mLayoutManager;
 
     private LayoutManagerHelper(RecyclerView recyclerView) {
         this.mRecyclerView = recyclerView;
-        if (recyclerView != null) {
-            this.mLayoutManager = recyclerView.getLayoutManager();
-        }
     }
 
     public static LayoutManagerHelper newInstance(RecyclerView recyclerView) {
         return new LayoutManagerHelper(recyclerView);
     }
 
+    private boolean ensureLayoutManager() {
+        if (mRecyclerView != null) {
+            mLayoutManager = mRecyclerView.getLayoutManager();
+            if (mLayoutManager != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean isFocusOnLeftmostColumn() {
-        if (mRecyclerView == null || mLayoutManager == null) {
+        if (!ensureLayoutManager()) {
             return false;
         }
         View child = mRecyclerView.getFocusedChild();
@@ -51,13 +61,9 @@ public final class LayoutManagerHelper {
             GridLayoutManager layoutManager = (GridLayoutManager) mLayoutManager;
             int orientation = layoutManager.getOrientation();
             if (orientation == GridLayoutManager.HORIZONTAL) {
-                if (position < layoutManager.getSpanCount()) {
-                    return true;
-                }
+                return position < layoutManager.getSpanCount();
             } else if (orientation == GridLayoutManager.VERTICAL) {
-                if (position % layoutManager.getSpanCount() == 0) {
-                    return true;
-                }
+                return position % layoutManager.getSpanCount() == 0;
             }
         } else if (mLayoutManager instanceof LinearLayoutManager) {
             LinearLayoutManager layoutManager = (LinearLayoutManager) mLayoutManager;
@@ -74,7 +80,7 @@ public final class LayoutManagerHelper {
     }
 
     public boolean isFocusOnRightmostColumn() {
-        if (mRecyclerView == null || mLayoutManager == null) {
+        if (!ensureLayoutManager()) {
             return false;
         }
         View child = mRecyclerView.getFocusedChild();
@@ -85,14 +91,14 @@ public final class LayoutManagerHelper {
             if (orientation == GridLayoutManager.HORIZONTAL) {
                 int rowCount = layoutManager.getItemCount() / layoutManager.getSpanCount();
                 int rowNum = position / layoutManager.getSpanCount();
-                if (rowNum == rowCount - 1) {
-                    return true;
-                }
+                return rowNum == rowCount - 1;
             } else if (orientation == GridLayoutManager.VERTICAL) {
                 if (position % layoutManager.getSpanCount() == layoutManager.getSpanCount() - 1) {
                     return true;
                 } else if (position == layoutManager.getItemCount() - 1) {
                     return true;
+                } else {
+                    return false;
                 }
             }
         } else if (mLayoutManager instanceof LinearLayoutManager) {
@@ -101,6 +107,8 @@ public final class LayoutManagerHelper {
             if (orientation == LinearLayoutManager.HORIZONTAL) {
                 if (position == layoutManager.getItemCount() - 1) {
                     return true;
+                } else {
+                    return false;
                 }
             } else if (orientation == LinearLayoutManager.VERTICAL) {
                 return true;
@@ -110,7 +118,7 @@ public final class LayoutManagerHelper {
     }
 
     public boolean isFocusOnTopmostRow() {
-        if (mRecyclerView == null || mLayoutManager == null) {
+        if (!ensureLayoutManager()) {
             return false;
         }
         View child = mRecyclerView.getFocusedChild();
@@ -122,11 +130,15 @@ public final class LayoutManagerHelper {
             if (orientation == GridLayoutManager.HORIZONTAL) {
                 if (position % layoutManager.getItemCount() == 0) {
                     return true;
+                } else {
+                    return false;
                 }
 
             } else if (orientation == GridLayoutManager.VERTICAL) {
                 if (position < layoutManager.getSpanCount()) {
                     return true;
+                } else {
+                    return false;
                 }
             }
 
@@ -148,7 +160,7 @@ public final class LayoutManagerHelper {
     }
 
     public boolean isFocusOnBottommostRow() {
-        if (mRecyclerView == null || mLayoutManager == null) {
+        if (!ensureLayoutManager()) {
             return false;
         }
         View child = mRecyclerView.getFocusedChild();
@@ -162,6 +174,8 @@ public final class LayoutManagerHelper {
                     return true;
                 } else if (position == layoutManager.getItemCount() - 1) {
                     return true;
+                } else {
+                    return false;
                 }
 
             } else if (orientation == GridLayoutManager.VERTICAL) {
@@ -169,6 +183,8 @@ public final class LayoutManagerHelper {
                 int rowNum = position / layoutManager.getSpanCount();
                 if (rowNum == rowCount - 1) {
                     return true;
+                } else {
+                    return false;
                 }
             }
 
