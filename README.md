@@ -17,11 +17,11 @@ Features
 Screenshots
 -------- 
 
-  #HorizontalLoadMoreGridView
+  HorizontalLoadMoreGridView
   
   ![image](https://github.com/Clendy/V14Leanback/blob/master/screenshots/Horizontal.gif)
   
-  #VerticalLoadMoreGridView
+  VerticalLoadMoreGridView
   
   ![image](https://github.com/Clendy/V14Leanback/blob/master/screenshots/vertical.gif)
   
