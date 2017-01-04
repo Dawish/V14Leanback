@@ -9,8 +9,8 @@ android {
         applicationId "io.github.clendy.sample"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 114
+        versionName "1.1.4"
 
     }
     buildTypes {
@@ -37,4 +37,5 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 
     compile project(':leanback')
+
 }

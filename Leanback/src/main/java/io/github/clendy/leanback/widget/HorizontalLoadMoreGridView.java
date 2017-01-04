@@ -18,9 +18,9 @@ package io.github.clendy.leanback.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.FocusFinder;
-import android.view.KeyEvent;
 import android.view.View;
 
 import io.github.clendy.leanback.R;
@@ -40,6 +40,25 @@ public class HorizontalLoadMoreGridView extends HorizontalGridView {
     private int mLoadState = OnLoadMoreListener.STATE_MORE_LOADED;
 
     private OnLoadMoreListener mLoadMoreListener;
+
+    private final Runnable mRequestLayoutRunnable = new Runnable() {
+        @Override
+        public void run() {
+            requestLayout();
+        }
+    };
+
+    private final Runnable mScrollLoadingRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (mLoadMoreListener != null) {
+                notifyMoreLoading();
+                allLoadedToastCount = 0;
+                mLoadMoreListener.loadMore();
+                mLoadMoreListener.showMsgLoading();
+            }
+        }
+    };
 
 
     public HorizontalLoadMoreGridView(Context context) {
@@ -64,6 +83,14 @@ public class HorizontalLoadMoreGridView extends HorizontalGridView {
         } finally {
             a.recycle();
         }
+    }
+
+    private void forceRequestLayout() {
+        ViewCompat.postOnAnimation(this, mRequestLayoutRunnable);
+    }
+
+    private void startLoadingRunnable(){
+        ViewCompat.postOnAnimation(this, mScrollLoadingRunnable);
     }
 
     public int getLoadState() {
@@ -92,17 +119,7 @@ public class HorizontalLoadMoreGridView extends HorizontalGridView {
      */
     public void loadMoreData() {
         if (canLoadMore && isMoreLoaded()) {
-            this.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (mLoadMoreListener != null) {
-                        notifyMoreLoading();
-                        allLoadedToastCount = 0;
-                        mLoadMoreListener.loadMore();
-                        mLoadMoreListener.showMsgLoading();
-                    }
-                }
-            });
+            startLoadingRunnable();
         } else if (canLoadMore && isAllLoaded() && allLoadedToastCount++ <= 0) {
             if (mLoadMoreListener != null) {
                 mLoadMoreListener.showMsgAllLoaded();
@@ -191,18 +208,16 @@ public class HorizontalLoadMoreGridView extends HorizontalGridView {
                 }
             }
         }
+
         if (direction == FOCUS_RIGHT) {
             final int position = getLayoutManager().getPosition(focused);
             if (position < getLayoutManager().getItemCount() - 1) {
-                focused.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        requestLayout();
-                    }
-                });
+                forceRequestLayout();
             }
         }
 
         return null;
     }
+
+
 }
