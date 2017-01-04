@@ -21,6 +21,7 @@ Screenshots
   
   ![image](https://github.com/Clendy/V14Leanback/blob/master/screenshots/Horizontal.gif)
   
+  
   VerticalLoadMoreGridView
   
   ![image](https://github.com/Clendy/V14Leanback/blob/master/screenshots/vertical.gif)
