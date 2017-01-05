@@ -1,6 +1,6 @@
 # V14Leanback
 [![Wercker](https://img.shields.io/badge/Gradle-2.2.2-brightgreen.svg)]()
-[![Wercker](https://img.shields.io/badge/version-V1.1.4-brightgreen.svg)]()
+[![Wercker](https://img.shields.io/badge/version-V1.1.5-brightgreen.svg)]()
 [![API](https://img.shields.io/badge/API-14%2B-green.svg?style=flat)](https://android-arsenal.com/api?level=14)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
@@ -35,7 +35,7 @@ allprojects {
         jcenter()
     }
 }
-compile 'io.github.clendy.leanback:v14leanback:1.1.4'
+compile 'io.github.clendy.leanback:v14leanback:1.1.5'
 ```
 
 Or Maven:
@@ -43,14 +43,14 @@ Or Maven:
 <dependency>
   <groupId>io.github.clendy.leanback</groupId>
   <artifactId>v14leanback</artifactId>
-  <version>1.1.4</version>
+  <version>1.1.5</version>
   <type>pom</type>
 </dependency>
 ```
 
 Or Ivy:
 ```groovy
-<dependency org='io.github.clendy.leanback' name='v14leanback' rev='1.1.4'>
+<dependency org='io.github.clendy.leanback' name='v14leanback' rev='1.1.5'>
   <artifact name='v14leanback' ext='pom' ></artifact>
 </dependency>
 ```
