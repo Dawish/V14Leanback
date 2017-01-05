@@ -1,9 +1,7 @@
 package io.github.clendy.sample.ui;
 
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
@@ -20,7 +18,6 @@ import io.github.clendy.leanback.utils.AnimUtil;
 import io.github.clendy.leanback.utils.DisplayUtil;
 import io.github.clendy.leanback.widget.SpanGridView;
 import io.github.clendy.sample.R;
-import io.github.clendy.sample.adapter.OnItemClickListener;
 import io.github.clendy.sample.adapter.SpanAdapter;
 import io.github.clendy.sample.model.Entity;
 import io.github.clendy.sample.presenter.VerticalPresenter;
@@ -83,6 +80,8 @@ public class SpanActivity extends BaseFragmentActivity<VerticalPresenter> implem
             mAdapter.addItems(entities);
         }
 
+        mRecyclerView.invalidate();
+
     }
 
     @Override
@@ -144,7 +143,6 @@ public class SpanActivity extends BaseFragmentActivity<VerticalPresenter> implem
                 DisplayUtil.dip2px(this, 30), false, false);
         mRecyclerView.addItemDecoration(decoration);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mRecyclerView.setOnKeyInterceptListener(new SpanGridView.OnKeyInterceptListener() {
             @Override

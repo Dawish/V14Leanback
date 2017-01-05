@@ -44,7 +44,6 @@ public class SpanAdapter extends RecyclerView.Adapter<SpanAdapter.ViewHolder> {
         mClickListener = clickListener;
     }
 
-
     public SpanAdapter(Context context) {
         this.mContext = context;
         mImgs = new int[]{
@@ -145,6 +144,7 @@ public class SpanAdapter extends RecyclerView.Adapter<SpanAdapter.ViewHolder> {
             this.viewType = viewType;
             mImg = ((ImageView) itemView.findViewById(R.id.img));
             mTitle = ((TextView) itemView.findViewById(R.id.title));
+            mTitle.setVisibility(View.GONE);
         }
     }
 }

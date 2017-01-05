@@ -13,7 +13,7 @@ import static android.support.v7.widget.RecyclerView.NO_POSITION;
  *
  * @author Clendy
  */
-class FocusArchivist {
+public class FocusArchivist {
 
     private int mLastSelectedPos = NO_POSITION;
     private long mLastSelectedId = NO_ID;
@@ -24,7 +24,7 @@ class FocusArchivist {
      *
      * @param rv Recycler view.
      */
-    void archiveFocus(@NonNull RecyclerView rv) {
+    public void archiveFocus(@NonNull RecyclerView rv) {
         if (rv.hasFocus()) {
             View focusedChild = rv.getFocusedChild();
             archiveFocus(rv, focusedChild);
@@ -37,7 +37,7 @@ class FocusArchivist {
      * @param rv    Recycler view.
      * @param child child of that recycler view.
      */
-    void archiveFocus(@NonNull RecyclerView rv, View child) {
+    public void archiveFocus(@NonNull RecyclerView rv, View child) {
         mLastSelectedPos = rv.getChildAdapterPosition(child);
         mLastSelectedId = rv.getChildItemId(child);
     }
@@ -49,7 +49,7 @@ class FocusArchivist {
      * @return Last focused view. Returns null if no appropriate view was found.
      */
     @Nullable
-    View getLastFocus(@NonNull RecyclerView rv) {
+    public View getLastFocus(@NonNull RecyclerView rv) {
         View lastFocused = findLastFocusedViewById(rv, mLastSelectedId);
 
         if (lastFocused != null) {

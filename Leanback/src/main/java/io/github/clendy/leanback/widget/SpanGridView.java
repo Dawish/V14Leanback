@@ -68,8 +68,6 @@ public class SpanGridView extends RecyclerView implements View.OnClickListener,
         void onItemClick(SpanGridView parent, View view, int position, long id);
     }
 
-    private int mScrollState = SCROLL_STATE_IDLE;
-
     private class ScrollListener extends OnScrollListener {
 
         public ScrollListener() {
@@ -79,7 +77,10 @@ public class SpanGridView extends RecyclerView implements View.OnClickListener,
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-            mScrollState = newState;
+            if (newState == SCROLL_STATE_IDLE) {
+                View focusedChild = getFocusedChild();
+                mFocusArchivist.archiveFocus(SpanGridView.this, focusedChild);
+            }
         }
 
         @Override
@@ -150,13 +151,13 @@ public class SpanGridView extends RecyclerView implements View.OnClickListener,
 
     @Override
     public void requestLayout() {
-        mPendingSelectionInt = NO_POSITION;
-        mFocusArchivist = new FocusArchivist();
         super.requestLayout();
     }
 
     @Override
     public void setAdapter(Adapter adapter) {
+        mPendingSelectionInt = NO_POSITION;
+        mFocusArchivist = new FocusArchivist();
         super.setAdapter(adapter);
     }
 
@@ -181,7 +182,7 @@ public class SpanGridView extends RecyclerView implements View.OnClickListener,
     private void setSelectionOnFirstLayout() {
         Log.d(TAG, "setSelectionOnFirstLayout");
         if (getChildCount() > 0) {
-            RecyclerView.ViewHolder holder = findViewHolderForAdapterPosition(0);
+            ViewHolder holder = findViewHolderForAdapterPosition(0);
             if (holder != null) {
                 if (hasFocus() && holder.itemView != null) {
                     holder.itemView.requestFocus();
@@ -192,7 +193,7 @@ public class SpanGridView extends RecyclerView implements View.OnClickListener,
 
     private void setSelectionOnLayout(int position) {
         Log.d(TAG, "setSelectionOnLayout position : " + position);
-        RecyclerView.ViewHolder holder = findViewHolderForAdapterPosition(position);
+        ViewHolder holder = findViewHolderForAdapterPosition(position);
         if (holder != null && holder.itemView != null) {
             if (this.hasFocus()) {
                 Log.d(TAG, "setSelectionOnLayout: requestFocus");
@@ -374,8 +375,7 @@ public class SpanGridView extends RecyclerView implements View.OnClickListener,
 
     private void fireOnItemSelectedEvent(View v, boolean hasFocus) {
         if (hasFocus) {
-            // TODO: 2016/12/29 029
-            smoothScrollToCenter(this, v);
+            smoothScrollToCenter(v);
             setSelectionOnLayout(getChildLayoutPosition(v));
             bringChildToFront(v);
             if (mOnItemFocusChangeListener != null) {
@@ -389,42 +389,33 @@ public class SpanGridView extends RecyclerView implements View.OnClickListener,
     }
 
     public boolean isFocusOnLeftmostColumn() {
-        if (mManagerHelper != null) {
-            return mManagerHelper.isFocusOnLeftmostColumn();
-        }
-        return false;
+        return mManagerHelper != null && mManagerHelper.isFocusOnLeftmostColumn();
     }
 
     public boolean isFocusOnTopmostRow() {
-        if (mManagerHelper != null) {
-            return mManagerHelper.isFocusOnTopmostRow();
-        }
-        return false;
+        return mManagerHelper != null && mManagerHelper.isFocusOnTopmostRow();
     }
 
     public boolean isFocusOnRightmostColumn() {
-        if (mManagerHelper != null) {
-            return mManagerHelper.isFocusOnRightmostColumn();
-        }
-        return false;
+        return mManagerHelper != null && mManagerHelper.isFocusOnRightmostColumn();
     }
 
     public boolean isFocusOnBottommostRow() {
-        if (mManagerHelper != null) {
-            return mManagerHelper.isFocusOnBottommostRow();
-        }
-        return false;
+        return mManagerHelper != null && mManagerHelper.isFocusOnBottommostRow();
     }
 
-    private void smoothScrollToCenter(RecyclerView parent, View focusChild) {
-        Log.w(TAG, "----------- smoothScrollToCenter ----------");
-        if (parent == null || focusChild == null) {
+    public FocusArchivist getFocusArchivist() {
+        return mFocusArchivist;
+    }
+
+    public void smoothScrollToCenter(View focusChild) {
+        if (focusChild == null) {
             return;
         }
-        if (!(parent.getLayoutManager() instanceof LinearLayoutManager)) {
+        if (!(getLayoutManager() instanceof LinearLayoutManager)) {
             return;
         }
-        LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
+        LinearLayoutManager layoutManager = (LinearLayoutManager) getLayoutManager();
         int orientation = layoutManager.getOrientation();
 
         int currentX = (layoutManager.getDecoratedLeft(focusChild) -
@@ -437,16 +428,16 @@ public class SpanGridView extends RecyclerView implements View.OnClickListener,
         if (orientation == HORIZONTAL) {
             int offset = getWidth() / 2 - currentX;
             if (offset < 0) {
-                parent.smoothScrollBy(Math.abs(offset), 0);
+                smoothScrollBy(Math.abs(offset), 0);
             } else {
-                parent.smoothScrollBy(-Math.abs(offset), 0);
+                smoothScrollBy(-Math.abs(offset), 0);
             }
         } else if (orientation == VERTICAL) {
             int offset = getHeight() / 2 - currentY;
             if (offset < 0) {
-                parent.smoothScrollBy(0, Math.abs(offset));
+                smoothScrollBy(0, Math.abs(offset));
             } else {
-                parent.smoothScrollBy(0, -Math.abs(offset));
+                smoothScrollBy(0, -Math.abs(offset));
             }
         }
     }
