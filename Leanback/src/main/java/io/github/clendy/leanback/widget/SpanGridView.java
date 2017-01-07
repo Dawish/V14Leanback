@@ -19,6 +19,7 @@ package io.github.clendy.leanback.widget;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -52,6 +53,7 @@ public class SpanGridView extends RecyclerView implements View.OnFocusChangeList
     private OnItemFocusChangeListener mOnItemFocusChangeListener;
     private RecyclerViewBring mRecyclerViewBring;
     private LayoutManagerHelper mManagerHelper;
+    private SpanLayoutManager mSpanLayoutManager;
 
     public interface OnKeyInterceptListener {
         boolean onInterceptKeyEvent(KeyEvent event);
@@ -129,6 +131,15 @@ public class SpanGridView extends RecyclerView implements View.OnFocusChangeList
 
     public void setOnItemFocusChangeListener(OnItemFocusChangeListener onItemFocusChangeListener) {
         mOnItemFocusChangeListener = onItemFocusChangeListener;
+    }
+
+    public SpanLayoutManager getSpanLayoutManager() {
+        return mSpanLayoutManager;
+    }
+
+    public void setSpanLayoutManager(@NonNull SpanLayoutManager spanLayoutManager) {
+        mSpanLayoutManager = spanLayoutManager;
+        setLayoutManager(mSpanLayoutManager);
     }
 
     public void setSelection(int adapterPosition) {
@@ -313,7 +324,9 @@ public class SpanGridView extends RecyclerView implements View.OnFocusChangeList
 
     @Override
     protected int getChildDrawingOrder(int childCount, int i) {
-        if (mRecyclerViewBring != null) {
+        if (mSpanLayoutManager != null) {
+            return mSpanLayoutManager.getChildDrawingOrder(this, childCount, i);
+        } else if (mRecyclerViewBring != null) {
             return mRecyclerViewBring.getChildDrawingOrder(this, childCount, i);
         } else {
             return super.getChildDrawingOrder(childCount, i);
