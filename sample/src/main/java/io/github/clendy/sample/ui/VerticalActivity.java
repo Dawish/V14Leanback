@@ -2,27 +2,22 @@ package io.github.clendy.sample.ui;
 
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
 import butterknife.BindView;
-import io.github.clendy.leanback.widget.BaseGridView;
-import io.github.clendy.leanback.widget.OnChildLaidOutListener;
-import io.github.clendy.leanback.widget.OnChildSelectedListener;
 import io.github.clendy.leanback.widget.OnLoadMoreListener;
 import io.github.clendy.leanback.widget.VerticalLoadMoreGridView;
 import io.github.clendy.sample.R;
 import io.github.clendy.sample.adapter.LoadMoreAdapter;
-import io.github.clendy.sample.adapter.OnItemClickListener;
 import io.github.clendy.sample.model.Entity;
 import io.github.clendy.sample.presenter.VerticalPresenter;
 import io.github.clendy.sample.presenter.VerticalPresenterImpl;
@@ -146,11 +141,9 @@ public class VerticalActivity extends BaseFragmentActivity<VerticalPresenter> im
     private void initRecyclerView() {
 
         mAdapter = new LoadMoreAdapter(this);
-        mAdapter.setClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position, Object entity) {
-
-            }
+        mAdapter.setClickListener((view, position, entity) -> {
+            Logger.t(TAG).d("entity:" + entity);
+            Toast.makeText(VerticalActivity.this, "" + position, Toast.LENGTH_SHORT).show();
         });
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -172,49 +165,42 @@ public class VerticalActivity extends BaseFragmentActivity<VerticalPresenter> im
             }
         });
 
-        mRecyclerView.setOnChildSelectedListener(new OnChildSelectedListener() {
-            @Override
-            public void onChildSelected(ViewGroup parent, View view, int position, long id) {
-                Log.d(TAG, "onChildSelected position:" + position);
-                if (mRecyclerView.isFocusOnBottomRow(view, position)) {
-                    mRecyclerView.loadMoreData();
-                }
+        mRecyclerView.setOnChildSelectedListener((parent, view, position, id) -> {
+            Logger.t(TAG).d("onChildSelected position:" + position);
+            if (mRecyclerView.isFocusOnBottomRow(view, position)) {
+                mRecyclerView.loadMoreData();
             }
         });
-        mRecyclerView.setOnChildLaidOutListener(new OnChildLaidOutListener() {
-            @Override
-            public void onChildLaidOut(ViewGroup parent, View view, int position, long id) {
-            }
+        mRecyclerView.setOnChildLaidOutListener((parent, view, position, id) -> {
+            Logger.t(TAG).d("onChildLaidOut position:" + position);
+            Logger.t(TAG).d("onChildLaidOut id:" + id);
         });
 
-        mRecyclerView.setOnKeyInterceptListener(new BaseGridView.OnKeyInterceptListener() {
-            @Override
-            public boolean onInterceptKeyEvent(KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    switch (event.getKeyCode()) {
-                        case KeyEvent.KEYCODE_DPAD_LEFT:
-                            if (mRecyclerView.isFocusOnLeftmostColumn()) {
-                                if (mOldFocusView != null) {
-                                    mOldFocusView.requestFocus();
-                                } else {
-                                    mBtnArray.get(0).requestFocus();
-                                }
-                                return true;
+        mRecyclerView.setOnKeyInterceptListener(event -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                switch (event.getKeyCode()) {
+                    case KeyEvent.KEYCODE_DPAD_LEFT:
+                        if (mRecyclerView.isFocusOnLeftmostColumn()) {
+                            if (mOldFocusView != null) {
+                                mOldFocusView.requestFocus();
+                            } else {
+                                mBtnArray.get(0).requestFocus();
                             }
-                            return false;
-                        case KeyEvent.KEYCODE_DPAD_UP:
-                            return false;
-                        case KeyEvent.KEYCODE_DPAD_RIGHT:
-                            return false;
-                        case KeyEvent.KEYCODE_DPAD_DOWN:
-                            return false;
-                        default:
-                            return false;
-                    }
-
+                            return true;
+                        }
+                        return false;
+                    case KeyEvent.KEYCODE_DPAD_UP:
+                        return false;
+                    case KeyEvent.KEYCODE_DPAD_RIGHT:
+                        return false;
+                    case KeyEvent.KEYCODE_DPAD_DOWN:
+                        return false;
+                    default:
+                        return false;
                 }
-                return false;
+
             }
+            return false;
         });
     }
 

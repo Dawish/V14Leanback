@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -136,42 +137,43 @@ public class SpanActivity extends BaseFragmentActivity<VerticalPresenter> implem
     private void initRecyclerView() {
 
         mAdapter = new SpanAdapter(this);
+        mAdapter.setClickListener((view, position, entity) -> {
+            Logger.t(TAG).d("entity:" + entity);
+            Toast.makeText(SpanActivity.this, "position:" + position, Toast.LENGTH_SHORT).show();
+        });
+        mRecyclerView.setAdapter(mAdapter);
+
         GridLayoutManager layoutManager = new GridLayoutManager(this, 4,
                 GridLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
-        HeaderDecoration decoration = new HeaderDecoration(DisplayUtil.dip2px(this, 10),
-                DisplayUtil.dip2px(this, 30), false, false);
-        mRecyclerView.addItemDecoration(decoration);
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addItemDecoration(new HeaderDecoration(DisplayUtil.dip2px(this, 10),
+                DisplayUtil.dip2px(this, 30), false, false));
 
-        mRecyclerView.setOnKeyInterceptListener(new SpanGridView.OnKeyInterceptListener() {
-            @Override
-            public boolean onInterceptKeyEvent(KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    switch (event.getKeyCode()) {
-                        case KeyEvent.KEYCODE_DPAD_LEFT:
-                            if (mRecyclerView.isFocusOnLeftmostColumn()) {
-                                if (mOldFocusView != null) {
-                                    mOldFocusView.requestFocus();
-                                } else {
-                                    mBtnArray.get(0).requestFocus();
-                                }
-                                return true;
+        mRecyclerView.setOnKeyInterceptListener(event -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                switch (event.getKeyCode()) {
+                    case KeyEvent.KEYCODE_DPAD_LEFT:
+                        if (mRecyclerView.isFocusOnLeftmostColumn()) {
+                            if (mOldFocusView != null) {
+                                mOldFocusView.requestFocus();
+                            } else {
+                                mBtnArray.get(0).requestFocus();
                             }
-                            return false;
-                        case KeyEvent.KEYCODE_DPAD_UP:
-                            return false;
-                        case KeyEvent.KEYCODE_DPAD_RIGHT:
-                            return false;
-                        case KeyEvent.KEYCODE_DPAD_DOWN:
-                            return false;
-                        default:
-                            return false;
-                    }
-
+                            return true;
+                        }
+                        return false;
+                    case KeyEvent.KEYCODE_DPAD_UP:
+                        return false;
+                    case KeyEvent.KEYCODE_DPAD_RIGHT:
+                        return false;
+                    case KeyEvent.KEYCODE_DPAD_DOWN:
+                        return false;
+                    default:
+                        return false;
                 }
-                return false;
+
             }
+            return false;
         });
 
         mRecyclerView.setOnItemFocusChangeListener(new SpanGridView.OnItemFocusChangeListener() {
@@ -186,12 +188,6 @@ public class SpanActivity extends BaseFragmentActivity<VerticalPresenter> implem
             }
         });
 
-        mRecyclerView.setOnItemClickListener(new SpanGridView.OnItemClickListener() {
-            @Override
-            public void onItemClick(SpanGridView parent, View view, int position, long id) {
-                Toast.makeText(SpanActivity.this, "position:" + position, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void initRequest() {

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.clendy.leanback.utils.AnimUtil;
+import io.github.clendy.leanback.widget.OnItemClickListener;
 import io.github.clendy.sample.R;
 import io.github.clendy.sample.model.Entity;
 
@@ -36,15 +37,14 @@ public class LoadMoreAdapter extends RecyclerView.Adapter<LoadMoreAdapter.ViewHo
     private Context mContext;
     private List<Entity> mItems = new ArrayList<>();
 
-    private OnItemClickListener mClickListener;
+    private OnItemClickListener<Entity> mClickListener;
 
     private final int[] mImgs;
     private final int[] mColors;
 
-    public void setClickListener(OnItemClickListener clickListener) {
+    public void setClickListener(OnItemClickListener<Entity> clickListener) {
         mClickListener = clickListener;
     }
-
 
     public LoadMoreAdapter(Context context) {
         this.mContext = context;

@@ -39,8 +39,8 @@ import io.github.clendy.leanback.utils.LayoutManagerHelper;
 /**
  * @author Clendy 2016/12/23 023 13:24
  */
-public class SpanGridView extends RecyclerView implements View.OnClickListener,
-        View.OnFocusChangeListener, ViewTreeObserver.OnGlobalFocusChangeListener {
+public class SpanGridView extends RecyclerView implements View.OnFocusChangeListener,
+        ViewTreeObserver.OnGlobalFocusChangeListener {
 
     private static final String TAG = SpanGridView.class.getSimpleName();
 
@@ -50,7 +50,6 @@ public class SpanGridView extends RecyclerView implements View.OnClickListener,
 
     private OnKeyInterceptListener mOnKeyInterceptListener;
     private OnItemFocusChangeListener mOnItemFocusChangeListener;
-    private OnItemClickListener mOnItemClickListener;
     private RecyclerViewBring mRecyclerViewBring;
     private LayoutManagerHelper mManagerHelper;
 
@@ -130,14 +129,6 @@ public class SpanGridView extends RecyclerView implements View.OnClickListener,
 
     public void setOnItemFocusChangeListener(OnItemFocusChangeListener onItemFocusChangeListener) {
         mOnItemFocusChangeListener = onItemFocusChangeListener;
-    }
-
-    public OnItemClickListener getOnItemClickListener() {
-        return mOnItemClickListener;
-    }
-
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        mOnItemClickListener = onItemClickListener;
     }
 
     public void setSelection(int adapterPosition) {
@@ -300,9 +291,6 @@ public class SpanGridView extends RecyclerView implements View.OnClickListener,
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
         super.addView(child, index, params);
-        if (mOnItemClickListener != null) {
-            child.setClickable(true);
-        }
     }
 
     @Override
@@ -350,27 +338,13 @@ public class SpanGridView extends RecyclerView implements View.OnClickListener,
     @Override
     public void onChildAttachedToWindow(View child) {
         super.onChildAttachedToWindow(child);
-        child.setOnClickListener(this);
         child.setOnFocusChangeListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        fireOnItemClickEvent(v);
     }
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         setSelection(getChildAdapterPosition(v));
         fireOnItemSelectedEvent(v, hasFocus);
-    }
-
-    private void fireOnItemClickEvent(View child) {
-        if (mOnItemClickListener != null) {
-            int position = getChildAdapterPosition(child);
-            long id = getChildItemId(child);
-            mOnItemClickListener.onItemClick(this, child, position, id);
-        }
     }
 
     private void fireOnItemSelectedEvent(View v, boolean hasFocus) {
