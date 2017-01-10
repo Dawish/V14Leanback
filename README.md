@@ -1,6 +1,6 @@
 # V14Leanback
 [![Wercker](https://img.shields.io/badge/Gradle-2.2.3-brightgreen.svg)]()
-[![Wercker](https://img.shields.io/badge/version-V1.1.6-brightgreen.svg)]()
+[![Wercker](https://img.shields.io/badge/version-V1.1.6-brightgreen.svg)](https://bintray.com/clendy2016/maven/v14leanback/1.1.6)
 [![API](https://img.shields.io/badge/API-14%2B-green.svg?style=flat)](https://android-arsenal.com/api?level=14)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
