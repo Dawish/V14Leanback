@@ -127,25 +127,19 @@ public class LoadMoreVerticalAdapter extends RecyclerView.Adapter<LoadMoreVertic
                     .into(holder.mImg);
             holder.mTitle.setText(position + "." + entity.getTitle());
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mClickListener != null) {
-                        mClickListener.onItemClick(v, holder.getLayoutPosition(), entity);
-                    }
+            holder.itemView.setOnClickListener(v -> {
+                if (mClickListener != null) {
+                    mClickListener.onItemClick(v, holder.getLayoutPosition(), entity);
                 }
             });
 
-            holder.itemView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus) {
-                        holder.mTitle.setBackgroundColor(mColors[0]);
-                        AnimUtil.scaleAnim(v, 1.2f, 1.2f, 300);
-                    } else {
-                        holder.mTitle.setBackgroundColor(mColors[1]);
-                        AnimUtil.scaleAnim(v, 1.0f, 1.0f, 300);
-                    }
+            holder.itemView.setOnFocusChangeListener((v, hasFocus) -> {
+                if (hasFocus) {
+                    holder.mTitle.setBackgroundColor(mColors[0]);
+                    AnimUtil.scaleAnim(v, 1.2f, 1.2f, 300);
+                } else {
+                    holder.mTitle.setBackgroundColor(mColors[1]);
+                    AnimUtil.scaleAnim(v, 1.0f, 1.0f, 300);
                 }
             });
 

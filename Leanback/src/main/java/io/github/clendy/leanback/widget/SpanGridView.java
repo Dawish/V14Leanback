@@ -47,6 +47,7 @@ public class SpanGridView extends RecyclerView implements View.OnFocusChangeList
 
     private int mPendingSelectionInt = NO_POSITION;
 
+
     private FocusArchivist mFocusArchivist = new FocusArchivist();
 
     private OnKeyInterceptListener mOnKeyInterceptListener;
@@ -164,6 +165,11 @@ public class SpanGridView extends RecyclerView implements View.OnFocusChangeList
     }
 
     @Override
+    public void addOnLayoutChangeListener(OnLayoutChangeListener listener) {
+        super.addOnLayoutChangeListener(listener);
+    }
+
+    @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
 
@@ -245,7 +251,7 @@ public class SpanGridView extends RecyclerView implements View.OnFocusChangeList
         if (result != null) {
             return result;
         }
-        final FocusFinder ff = FocusFinder.getInstance();
+        FocusFinder ff = FocusFinder.getInstance();
         result = ff.findNextFocus(this, focused, direction);
         if (result != null) {
             return result;

@@ -24,7 +24,7 @@ public class VerticalPresenterImpl extends BasePresenterImpl<IView, Entity>
         implements VerticalPresenter {
 
     private int offset = 0;
-    private static final int LIMIT = 20;
+    private static final int LIMIT = 30;
     private static final int COUNT = 116;
 
 
@@ -63,12 +63,9 @@ public class VerticalPresenterImpl extends BasePresenterImpl<IView, Entity>
                     })
                     .subscribeOn(Schedulers.io())
                     .unsubscribeOn(Schedulers.io())
-                    .doOnSubscribe(new Action0() {
-                        @Override
-                        public void call() {
-                            if (canPresenting()) {
-                                mView.showProgress();
-                            }
+                    .doOnSubscribe(() -> {
+                        if (canPresenting()) {
+                            mView.showProgress();
                         }
                     })
                     .delay(3000, TimeUnit.MILLISECONDS, Schedulers.io())

@@ -120,12 +120,9 @@ public class SpanAdapter extends RecyclerView.Adapter<SpanAdapter.ViewHolder> {
                         .into(holder.mImg);
                 holder.mTitle.setText(position + "." + entity.getTitle());
 
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mClickListener != null) {
-                            mClickListener.onItemClick(v, holder.getLayoutPosition(), entity);
-                        }
+                holder.itemView.setOnClickListener(v -> {
+                    if (mClickListener != null) {
+                        mClickListener.onItemClick(v, holder.getLayoutPosition(), entity);
                     }
                 });
             }

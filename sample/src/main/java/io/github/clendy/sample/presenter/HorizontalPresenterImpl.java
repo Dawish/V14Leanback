@@ -63,12 +63,9 @@ public class HorizontalPresenterImpl extends BasePresenterImpl<IView, Entity>
                     })
                     .subscribeOn(Schedulers.io())
                     .unsubscribeOn(Schedulers.io())
-                    .doOnSubscribe(new Action0() {
-                        @Override
-                        public void call() {
-                            if (canPresenting()) {
-                                mView.showProgress();
-                            }
+                    .doOnSubscribe(() -> {
+                        if (canPresenting()) {
+                            mView.showProgress();
                         }
                     })
                     .delay(2000, TimeUnit.MILLISECONDS, Schedulers.io())

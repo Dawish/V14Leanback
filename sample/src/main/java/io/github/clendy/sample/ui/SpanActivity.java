@@ -18,6 +18,7 @@ import io.github.clendy.leanback.decoration.HeaderDecoration;
 import io.github.clendy.leanback.utils.AnimUtil;
 import io.github.clendy.leanback.utils.DisplayUtil;
 import io.github.clendy.leanback.widget.SpanGridView;
+import io.github.clendy.leanback.widget.SpanLayoutManager;
 import io.github.clendy.sample.R;
 import io.github.clendy.sample.adapter.SpanAdapter;
 import io.github.clendy.sample.model.Entity;
@@ -143,7 +144,7 @@ public class SpanActivity extends BaseFragmentActivity<VerticalPresenter> implem
         });
         mRecyclerView.setAdapter(mAdapter);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 4,
+        SpanLayoutManager layoutManager = new SpanLayoutManager(this, mRecyclerView, 4,
                 GridLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.addItemDecoration(new HeaderDecoration(DisplayUtil.dip2px(this, 10),
